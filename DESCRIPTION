@@ -8,7 +8,8 @@ Description: Tateya vegetation monitoring
 License: GPL (>= 2)
 Depends: 
     R (>= 3.6.2),
-    shapefiles
+    shapefiles,
+    stringi
 Suggests: 
     testthat,
     knitr,
@@ -16,4 +17,4 @@ Suggests:
 VignetteBuilder: knitr
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.2.2
+RoxygenNote: 7.2.1
