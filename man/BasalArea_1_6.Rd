@@ -2,15 +2,18 @@
 % Please edit documentation in R/Fig.R
 \name{BasalArea_1_6}
 \alias{BasalArea_1_6}
-\title{returns basal area of a plot for a spesies}
+\title{returns basal area of a plot for a species}
 \usage{
 BasalArea_1_6(plotname = "Kaminokodaira", species = "ooshirabiso")
 }
 \arguments{
 \item{species}{}
 }
+\value{
+data.frame(Year,BasaAera)
+}
 \description{
-returns basal area of a plot for a spesies
+returns basal area of a plot for a species
 }
 \examples{
 plot. <- "Kaminokodaira"

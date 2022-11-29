@@ -1,6 +1,6 @@
 # Fig.R
 
-#' returns basal area of a plot for a spesies
+#' returns basal area of a plot for a species
 #'
 #' @param plotname
 #' @param species
@@ -25,11 +25,15 @@
 BasalArea_1_6 <- function(plotname="Kaminokodaira",species= "ooshirabiso"){
   ii<-which(plt$na==plotname)
   d <- dd3[dd3$plot==ii,]
+  d <- subset(dd3,plot==ii & sp==species)
+  d[is.na(d)]<-0
   yrc<-match(paste0("yr",1:6),names(plt))
   dbhc<-match(paste0("d0",1:6),names(d))
-  ba <- pi*(d[,dbhc]/200)^2
-  sp_ = species
-  i.sp <- d$sp == sp_
+    fc<-match(paste0("f0",1:6),names(d))
+  d[,dbhc]<-d[,dbhc]*(d[,dbhc]>=10) * (d[,fc]>0)
+
+  ba <- pi*(d[,dbhc]/200)^2 #
+  i.sp <- d$sp == species
   ba_ <- ba[i.sp,]
   BasaAera <- as.vector(colSums(ba_,na.rm=T))
   Year <-as.numeric(plt[ii,yrc])
