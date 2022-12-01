@@ -1,6 +1,6 @@
-###@Tateyama_BA_periods changes.R
+###ã€€Tateyama_BA_periods changes.R
 #setwd("./test")
-#load("—§R–ˆ–Ø’²¸_dd_plt.Rdata")
+#load("ç«‹å±±æ¯æœ¨èª¿æŸ»_dd_plt.Rdata")
 dbh_col=c("d01","d02","d03","d04","d05","d06")
 f_col=c("f01","f02","f03","f04","f05","f06")
 
@@ -9,14 +9,14 @@ f_col=c("f01","f02","f03","f04","f05","f06")
 #' @param d   forest data.
 #' @param sp  species name. if default is sp="", that operate for all species
 #'
-#' @return@vector of sum of basal area for each period(year)
+#' @returnã€€vector of sum of basal area for each period(year)
 #' @export
 #'
 #' @examples
 #' d<-dd[[1]]
-#' BA_calc(d,"ƒXƒM")
-BA_calc <-function(d,sp=""){@#sp="ƒuƒi"
-  i<-if(sp==""){1:nrow(d)}else{d$sp==sp} # í‚Ìw’è‚ª""‚Ì‘Sí
+#' BA_calc(d,"ã‚¹ã‚®")
+BA_calc <-function(d,sp=""){ã€€#sp="ãƒ–ãƒŠ"
+  i<-if(sp==""){1:nrow(d)}else{d$sp==sp} # ç¨®ã®æŒ‡å®šãŒ""ã®æ™‚å…¨ç¨®
   dbh<- d[i,dbh_col]
   dbh[dbh<10]<-0
 	f<-d[i,f_col] ;f[is.na(f)]<--999
@@ -27,16 +27,16 @@ BA_calc <-function(d,sp=""){@#sp="ƒuƒi"
 	return(ba.sum)
 }
 
-### Šˆ—Í“x‚ğ’²‚×‚Ä‚¢‚È‚¢‚ª¶‚«‚Ä‚¢‚½–Ø
+### æ´»åŠ›åº¦ã‚’èª¿ã¹ã¦ã„ãªã„ãŒç”Ÿãã¦ã„ãŸæœ¨
 (f.<-dd[[4]][,c(f_col)])
 table(as.numeric(as.matrix(f.)))  #3 ->9(185)  5 -> 99(123)
 sum(is.na(f.))
 ######
 sp.=""
 
-sp.="ƒuƒi"
-sp.="ƒXƒM"
-sp.="ƒIƒIƒVƒ‰ƒrƒ\"
+sp.="ãƒ–ãƒŠ"
+sp.="ã‚¹ã‚®"
+sp.="ã‚ªã‚ªã‚·ãƒ©ãƒ“ã‚½"
 
 
 BA <- matrix(0,8,6)
