@@ -1,9 +1,7 @@
-# 活力度と死亡率.R
-load("data/立山毎木調査_dd_dd2_plt.Rdata")
-dbh_col=c("d01","d02","d03","d04","d05","d06")
-f_col=c("f01","f02","f03","f04","f05","f06")
+# data set #
+# setwd("./test")
 
-d<-dd2
+
 
 #' plot relationships vital index and mortality from term 2 to 6
 #'
@@ -13,7 +11,15 @@ d<-dd2
 #' @export
 #'
 #' @examples
-vital_mortality <- function(d.,sp.=""){# sp.="スギ" ;　d.=d
+#'
+#' par(mfrow=c(1,4))
+#' vital_mortality(dd2)        # all species ####
+#' vital_mortality(dd2,"スギ") #Cryptomeria japonica スギ　####
+#' vital_mortality(dd2,"ブナ") # Fagus crenata ブナ　####
+#' vital_mortality(dd2,"オオシラビソ") # Abies mariesii オオシラビソ　####
+#'
+
+vital_mortality <- function(d.,sp.=""){# sp.="スギ" ;　d.=dd2
 
   if(sp.==""){d<-d.}else{d<-subset(d.,sp==sp.)}
   d[is.na(d)]<- -999
@@ -52,20 +58,3 @@ vital_mortality <- function(d.,sp.=""){# sp.="スギ" ;　d.=d
 
 }
 
-d_ <- d
-par(mfrow=c(1,4))
-# all species ####
-vital_mortality(d_)
-# Cryptomeria japonica スギ　####
-vital_mortality(d_,"スギ")
-# Fagus crenata ブナ　####
-vital_mortality(d_,"ブナ")
-# Abies mariesii オオシラビソ　####
-vital_mortality(d_,"オオシラビソ")
-
-# test code ####################
-if(0){
- i<- d[,f_col[1]]==-1
- sum(i)
- d[i,]
-}

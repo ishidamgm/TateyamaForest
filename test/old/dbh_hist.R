@@ -1,4 +1,4 @@
-# dbh_hist.R
+# dbh_hist.R ####
 
 
 
@@ -17,10 +17,7 @@
 #' dbh_hist("Kaminokodaira","ooshirabiso", i,ylim=c(0,13))
 #' }
 #'
-
-#'
 dbh_hist <- function(plotname="Kaminokodaira",species="ooshirabiso", term=1,...){
-
   ii<-which(plt$na==plotname)
   d <- dd3[dd3$plot==ii,]
   sp <- d$sp
@@ -38,6 +35,5 @@ dbh_hist <- function(plotname="Kaminokodaira",species="ooshirabiso", term=1,...)
 h.all  <- hist(dbh. [i],col="black",
                xlab="DBH (cm)", main=paste(plotname,Year, species,sep="_"),...)
 h.dead <- hist(dbh. [i & f.>0],col="white",add=T)
-
 
 }

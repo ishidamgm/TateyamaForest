@@ -31,8 +31,8 @@ BasalArea_1_6 <- function(plotname="Kaminokodaira",species= "ooshirabiso"){
   sp_ = species
   i.sp <- d$sp == sp_
   ba_ <- ba[i.sp,]
-  BasaAera <- as.vector(colSums(ba_,na.rm=T))
+  BasalAera <- as.vector(colSums(ba_,na.rm=T))
   Year <-as.numeric(plt[ii,yrc])
-  return(data.frame(Year,BasaAera))
+  return(data.frame(Year,BasalAera))
 }
 
