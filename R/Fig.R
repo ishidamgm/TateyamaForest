@@ -63,7 +63,7 @@ vital_mortality <- function(d.,sp.=""){# sp.="スギ" ;　d.=dd2
 
   # 2期の活力度とその後の死亡率
   for (i in 3:6){ #i=6　　1期は欠測があるので除外
-    f1<-d[,f_col[2]] ; f2<-d[,f_col[i]]
+    f1<-d[,clm_f[2]] ; f2<-d[,clm_f[i]]
     t. <- table(f1,f2)
     f1.<- match(1:5,rownames(t.))  #2期に生存していた出現活力度
     f2.<- match(-1:5,colnames(t.))　#i期に倒伏枯死木も含めた出現活力度
@@ -126,6 +126,7 @@ dbh_hist <- function(plotname="Kaminokodaira",species="ooshirabiso", term=1,...)
   h.dead <- hist(dbh. [i & f.>0],col="white",add=T)
 
 }
+
 
 
 

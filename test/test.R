@@ -1,65 +1,68 @@
-#' Title
-#'
-#' @param x
-#'
-#' @return x^2
-#' @export
-#'
-#' @examples
-#' plot(f(1:10))
-f <- function(x){
-  x^2
-}
+library(dplyr)
+nasa
+data("nasa", package = "dplyr")
+nasa
 
-#' Title
-#'
-#' @param x
-#'
-#' @return x^2
-#' @export
-#'
-#' @examples
-#' plot(f3(1:10))
-f3 <- function(x){
-  x^3
-}
+library(ggplot2)
+data(package="ggplot2")
+?diamonds
 
-#' test script
-#'
-#' @param x
-#'
-#' @return x^2
-#' @export
-#'
-#' @examples
-#' txt <- 'zz'
-#'jtxt(txt)
-j_txt <- function(x){
-  paste0(x,1:5)
-}
+data(package="TateyamaForest")
+ls()
+dir("data/")
+data(load("data/TateyamaForest_dd3_plt.RData"))
+## restore the saved values to the current environment
+local({
+  load("data/TateyamaForest_dd3_plt.RData")
+  ls()
+})
+
+library(fs)
+dir_tree()
+
+data(TateyamaForest_dd3_plt)
+data()
+rm(list=ls())
+ls()
+data()
+data(package="raster")
+
+data(package="nenrin")
+data(package="RGBFisheye")
+data(package="ForestTools")
+data(package="TateyamaForest")
+library(TateyamaForest)
+dd2
+
+library(sf)
+demo(package = "sf")
+
+URL.CURRENT <- "http://api.openweathermap.org/data/2.5/weather?"
+current.Weather <- getURL(paste0(URL.CURRENT,"q=","Tokyo"))
+fromJSON(current.Weather);
+
+z<-c("a","b","g")
+for(i in 1:length(z))assign(z[i],1:10)
+g
+letters
+a<-tibble(tibble(x = 1:3, y = list(1:5, 1:10, 1:20)))
+          #> # A tibble: 3 × 2)
+a
+str(a)
+a$y[1]
 
 
 
-#' Title
-#'
-#' @param plotname
-#' @param species
-#'
-#' @return
-#' @export
-#'
-#' @examples
-BasalArea16___ <- function(plotname,species){
-  d <- dd2[dd2$plot==ii,]
+library(tidyverse)
+library(gtrendsR)
+library(rvest)
+library(ngramr)
 
-  yrc<-match(paste0("yr",1:6),names(plt))
+trend <- gtrends(keyword = "コロナ", geo = "JP")
+plot(trend)
 
-  dbhc<-match(paste0("d0",1:6),names(d))
-  ba <- pi*(d[,dbhc]/200)^2
-  sp_ = species
-  i.sp <- d$sp == sp_
-  ba_ <- ba[i.sp,]
-  BasaAera <- as.vector(colSums(ba_,na.rm=T))
-  Year <-as.numeric(plt[ii,yrc])
-  return(data.frame(Year,BasaAera))
-}
+trend <- gtrends(keyword = c("ロシア", "ウクライナ"), geo = "JP")
+plot(trend)
+
+
+

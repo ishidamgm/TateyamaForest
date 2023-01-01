@@ -2,9 +2,9 @@
 
 if(0){
   load("立山毎木調査_dd_dd2_plt.Rdata")  ### dd2を読まなければならない
-  vital.clm <- c("f02","f03","f04","f05","f06")
-  dbh.clm <- c("d02","d03","d04","d05","d06")
-  yr.clm <- c("yr2","yr3","yr4","yr5","yr6")
+  clm_f <- c("f02","f03","f04","f05","f06")
+  clm_dbh <- c("d02","d03","d04","d05","d06")
+  clm_yr <- c("yr2","yr3","yr4","yr5","yr6")
   d<-dd2
   #save(vital.clm,dbh.clm,yr.clm,file="../data/clm.RData")
 }
