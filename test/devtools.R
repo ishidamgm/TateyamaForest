@@ -2,6 +2,7 @@ rm(list=ls())
 devtools::install_github("ishidamgm/TateyamaForest")
 library(TateyamaForest)
 help(package="TateyamaForest")
+data(package="TateyamaForest")
 dd3
 dd2
 clm_f
