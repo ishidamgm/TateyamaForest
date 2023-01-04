@@ -19,4 +19,13 @@ library(TateyamaForest)
 dd3
 dn <- nrow(dd3)
 paste("計測総本数は",dn, "本であった。")
-paste("そのうち枯死を",dn, "本であった。")
+paste("そのうち枯死したりは",dn, "本であった。")
+
+names(dd3)
+table(dd3$sp)
+d<-subset(dd3,sp=="ooshirabiso")
+tn<-nrow(d)
+d[,clm_f]
+
+
+

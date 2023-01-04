@@ -1,9 +1,17 @@
+rm(list=ls())
 devtools::install_github("ishidamgm/TateyamaForest")
 library(TateyamaForest)
 help(package="TateyamaForest")
 dd3
 dd2
+clm_f
+plt[,clm_yr]
+TateyamaForest::
 
+f<-function(){
+  return(TateyamaForest::dd2)
+}
+f()
 
 plot. <- "Kaminokodaira"
 sp.1 <- "ooshirabiso"

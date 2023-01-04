@@ -1,0 +1,66 @@
+---
+title: "TateyamaForest"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{TateyamaForest}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(TateyamaForest)
+```
+
+
+```{r plot}
+plot(1:10)
+head(dd3)
+# par(mfrow=c(1,4))
+# vital_mortality(dd2)        # all species ####
+```
+
+胸高断面積成長
+
+
+オオシラビソは枯れてからどのくらいの期間立ち枯れしているのだろうか?
+細い木は早く倒れる
+太い幹折れは長期間立っている
+といっても20年もたっている枯れ木はまれだろう
+オオシラビソは何本あったのか?
+途中で枯れた木はそのうち何本か?
+活力度の調査データからどうやって計算するか?
+新加入木はとりあえず除外する
+type
+全期間生きていた。
+途中で死んだ。
+生きた状態から突然倒れた
+　前回の調査直後に倒れた場合　最大推定値
+　今回の調査の直前に倒れた　　最小推定値
+立ち枯れた状態から倒れた　0の値を持つ
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

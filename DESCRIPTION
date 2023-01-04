@@ -1,7 +1,7 @@
 Package: TateyamaForest
 Type: Package
 Title: What the Package Does (Title Case)
-Version: 0.0.1
+Version: 0.0.1.999
 Author: Ishida M
 Maintainer: Ishida M <ishidam@gifu-u.ac.jp>
 Description: Tateya vegetation monitoring
@@ -14,7 +14,8 @@ Depends:
 Suggests: 
     testthat,
     knitr,
-    rmarkdow
+    rmarkdow,
+    rmarkdown
 VignetteBuilder: knitr
 Encoding: UTF-8
 LazyData: true
