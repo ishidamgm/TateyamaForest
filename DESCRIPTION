@@ -1,20 +1,21 @@
 Package: TateyamaForest
 Type: Package
 Title: Forest data anarysys of Tateya vegetation monitoring
-Version: 0.0.0.20250528
+Version: 0.0.0.202408260534
 Author: Ishida M & Nakajima H
 Maintainer: Ishida M <ishidam@sanchikanri.co.jp>
 Description: Tateya vegetation monitoring
 License: GPL (>= 2)
 Depends: 
     R (>= 3.6.2),
+    akima,
     shapefiles,
     stringi
 Suggests: 
     testthat,
     knitr,
-    rmarkdown
+    rmarkdow
 VignetteBuilder: knitr
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.3.2
+RoxygenNote: 7.3.1
