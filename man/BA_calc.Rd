@@ -4,7 +4,7 @@
 \alias{BA_calc}
 \title{Calculates basal areas of each period}
 \usage{
-BA_calc(d, sp = "", dbh.min = 10, f.min = 1)
+BA_calc(d, sp = "スギ", dbh.min = 10, f.min = 1)
 }
 \arguments{
 \item{d}{forest data.}
@@ -23,9 +23,9 @@ omit tree data with is.na(dbh) and dbh < 10cm
 }
 \examples{
 plt
-plot.<-"Matsuotoge"
+plot.<-"Kaminokodaira"
 d<-subset(dd3,plot==plot.) #d<-subset(dd3.,pn==6) #
-BA_calc(d,"sugi")
+BA_calc(d,"スギ")
 (ba.<-BA_calc(d,""))
 ba./ba.[1]
 plot.<-"Mimatsu"
@@ -34,9 +34,9 @@ d<-subset(dd3,plot==plot.)
  (ba.<-BA_calc(d,"",dbh.min=10))
 plot.<-"Kagamiishi"
 d<-subset(dd3,plot==plot.)
-plot(ba.<-BA_calc(d,"",dbh.min=0),type="b",ylim=c(0.4,1),main=plot.)
+plot(ba.<-BA_calc(d,"",dbh.min=0),type="b",ylim=c(0.4,1),main=plot.,ylab="Basal Area")
 lines(ba..<-BA_calc(d,"",dbh.min=10),col="red",type="b")
-legend(1.5,1.15,c("dbh>0cm","dbh>10cm"),col=c("black","red"),lty=c(1,1))
+legend(1.5,1.0,c("dbh>0cm","dbh>10cm"),col=c("black","red"),lty=c(1,1))
 
 plot(ba./ba.[1],type="b",ylim=c(0.9,1.2),main=plot.)
 lines(ba../ba..[1],type="b",col="red")

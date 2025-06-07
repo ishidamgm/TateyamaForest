@@ -1,7 +1,7 @@
 ---
 title: "北アルプス立山における温暖化と森林帯の上昇　Temperate warming and forest zone shift on Northern Alps Tateyama, Central Japan"
 author: "石田　仁・中島春樹・大宮徹・久米　篤　Ishida M, Nakajima H, Ohmiya T, Kume A"
-date: "`r Sys.Date()`"
+date: "2024-10-31"
 output:
   html_document:
     output_dir: "vignettes"
@@ -31,17 +31,7 @@ bibliography: TateyamaForest.bib
 
 
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
 
-
-library(kableExtra)
-library(ggplot2)
-
-library(TateyamaForest)
- . <- TateyamaForest2024
-d0=.$d0;.$plot_profile=plt;plt2=.$plt2;cnD=.$colnames_D;cnf=.$colnames_f;yr=.$yr
-```
 
 We investigated the relationship between forest dynamics and global warming from 1998 to the present, 2024, in Bunasaka (1,090m above sea level, temperate, Japanese cedar-beech forest), Kaminokodaira (1,430m above sea level, transition zone, Japanese cedar-Japanese pine-beech-Maries' fir forest), Matsuo-toge (1,970m above sea level, subarctic, Maries' fir forest), and Kagamiishi (2,250m above sea level, tree line, Pinus pumila-Maries' fir forest) in the Northern Alps of Chubu Sangaku National Park. The total basal area at breast height of the forest stands increased over time during the survey period in all survey areas. Focusing on the growth of basal area at breast height of the constituent species, in the Kaminokodaira survey area, where temperate and subarctic tree species are mixed, temperate species increased, whereas subarctic species decreased. In particular, many dead trees were observed at all diameter levels for M. mariesii at the start of the survey, and the mortality rate of surviving individuals at that time 
 reached50% during the survey period. When calculating by default using the Climate Value Mesh File 2000 (reference year 1987), Kami-Odaira is within the 54°C/month transition zone, but if we assume that the temperature rise at Kurobe Dam was similar in each survey area, it is estimated that it exceeded 55°C/month in the late 1980s and was already in the temperate zone at the time of the survey. Given the large number of dead trees at Kami-Odaira at the start of the survey for M. mariesii, the high mortality rate of surviving M. mariesii, and the increased growth of temperate elements, it can be said that the possibility of the forest zone being raised by global warming cannot be denied.
@@ -64,15 +54,53 @@ reached50% during the survey period. When calculating by default using the Clima
 We surveyed on the lava plateau of Mt. Tateyama in the Northern Alps of Chubu Sangaku National Park (Figure 1).
 
 
-```{r sites, echo=FALSE, results='asis'}
-
-#plt2[,c("na","ido","kei","alt","Area")]
-
-TateyamaForest_sites <- plt2[,c("na","ido","kei","alt","Area")]
-knitr::kable( TateyamaForest_sites, caption = "List of survey plots", booktabs = TRUE) %>%
-  kableExtra::kable_styling(font_size = 10, latex_options = "HOLD_position")
-
-```
+<table class="table" style="font-size: 10px; margin-left: auto; margin-right: auto;">
+<caption style="font-size: initial !important;">List of survey plots</caption>
+ <thead>
+  <tr>
+   <th style="text-align:left;">  </th>
+   <th style="text-align:left;"> na </th>
+   <th style="text-align:right;"> ido </th>
+   <th style="text-align:right;"> kei </th>
+   <th style="text-align:right;"> alt </th>
+   <th style="text-align:right;"> Area </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> 2 </td>
+   <td style="text-align:left;"> Bunazaka </td>
+   <td style="text-align:right;"> 36.57857 </td>
+   <td style="text-align:right;"> 137.4676 </td>
+   <td style="text-align:right;"> 1090 </td>
+   <td style="text-align:right;"> 10000 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 4 </td>
+   <td style="text-align:left;"> Kaminokodaira </td>
+   <td style="text-align:right;"> 36.57132 </td>
+   <td style="text-align:right;"> 137.5068 </td>
+   <td style="text-align:right;"> 1430 </td>
+   <td style="text-align:right;"> 10000 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 5 </td>
+   <td style="text-align:left;"> Matsuotoge </td>
+   <td style="text-align:right;"> 36.56189 </td>
+   <td style="text-align:right;"> 137.5526 </td>
+   <td style="text-align:right;"> 1970 </td>
+   <td style="text-align:right;"> 5000 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 7 </td>
+   <td style="text-align:left;"> Kagamiishi </td>
+   <td style="text-align:right;"> 36.58202 </td>
+   <td style="text-align:right;"> 137.5755 </td>
+   <td style="text-align:right;"> 2250 </td>
+   <td style="text-align:right;"> 625 </td>
+  </tr>
+</tbody>
+</table>
 
 ![](Tateyama_birdeye_intact_plot.png)
 **Figure 1.** A bird's-eye view showing the locations of Bunazaka (temperate, cedar-beech forest), Kaminokodaira (transition zone, cedar-Japanese pine-beech-Maries fir forest), Matsuo Toge (subarctic, Maries fir forest), and Kagamiishi (tree line, dwarf pine-Maries fir forest) on the lava plateau of Mt. Tateyama in the Northern Alps of Chubu Sangaku National Park.
