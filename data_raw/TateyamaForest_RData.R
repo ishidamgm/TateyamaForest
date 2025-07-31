@@ -4,11 +4,104 @@
 getwd()
 fs::dir_tree()
 
+library("dplyr")
+library("readr")
+
 library("TateyamaForest")
+
 data(package="TateyamaForest")
 help(package="TateyamaForest")
 dir("data/")
 
+# dd5 ####
+## 2025/7/31(木) v期までの毎木データ揃ったのでdd5として作成
+## 中島さんから送っていただく
+# > setwd("~/8T/Dropbox/00D/00/tateyama/TateyamaForest/TateyamaForest/data_raw")
+
+# ForestPlots   pltのtibble版　yr7　挿入
+df<- readr::read_csv("plot profile 2025.csv",skip=1)
+yr7<-df$yr7
+ForestPlots <- df %>%
+  relocate(yr7, .before = limD)
+# save(ForestPlots ,file="../data/ForestPlots.RData")
+
+#　TateyamaForest2025.RData ####
+# check ####
+.<-TateyamaForest2024
+names(.)
+.$plt2
+.$colnames_D
+.$colnames_f
+.$yr
+.$plot_profile
+.$d0
+
+# plot_profile ####
+plot_profile<-as.data.frame(ForestPlots)
+.$plot_profile<-plot_profile
+# plt2 ####
+plt2
+
+
+# yr ####
+yr<- ForestPlots %>%
+  select(na, yr1:yr7) %>%
+  tibble::column_to_rownames("na")
+yr
+.$yr<-yr
+# colnames_D ####
+
+colnames_D <- ForestPlots %>%
+  select(na, yr1:yr7) %>%
+  mutate(across(starts_with("yr"),
+                ~ paste0("D", substr(as.character(.), 3, 4)))) %>%
+  tibble::column_to_rownames("na")
+colnames_D
+.$colnames_D<-colnames_D
+# colnames_f ####
+colnames_f <- ForestPlots %>%
+  select(na, yr1:yr7) %>%
+  mutate(across(starts_with("yr"),
+                ~ paste0("f", substr(as.character(.), 3, 4)))) %>%
+  tibble::column_to_rownames("na")
+colnames_f
+.$colnames_f<-colnames_f
+# d0 ###
+.$d0$Arimine<-read.csv("Arimine2025.csv")
+.$d0$Mimatsu<-read.csv("Mimatsu2025.csv")
+
+# TateyamaForest2025 ####
+TateyamaForest2025 <- .
+
+# save(TateyamaForest2025, file="TateyamaForest2025.RData")
+
+# dd5 : A data frame for all plots field surveys ####
+
+d0<-.$d0
+itm <- c("pn","plot","lb","sp","d01","d02","d03","d04","d05","d06","d07","f01","f02","f03","f04","f05","f06","f07","x", "y")
+dclm <- .$colnames_D
+fclm <- .$colnames_f
+
+dd5 <-data.frame()
+for(ii in 1:nrow(plt)){　# ii<-1
+  na. <- plt$na[ii]
+  d0. <- d0[[na.]] #  names(d0.)
+  itm. <- c("lb","sp",as.character(c(dclm[ii,],fclm[ii,])),"x","y")
+  ###  term 7 measurements have not carried out in Mimatsu, Kagamiishi and Arimine plots, at 2024. ####
+  # if(is.element(na.,c("Mimatsu","Kagamiishi","Arimine"))){
+  #   d0.<-data.frame(d0.,d07=NA,f07=NA)
+  #   itm.[is.na(itm.)] <- c("d07","f07")
+  # }
+  # names(d0.)
+  d. <- data.frame(pn=ii,plot=na.,d0.[,itm.])
+
+  names(d.) <- itm
+  dd5 <- rbind(dd5,d.)
+}
+
+dd5
+
+# save(dd5, file="dd5.RData")
 
 # 2024/10/21(日) 14:29 dd3に6期までのデータしか無い
 # 【案1】TateyamaForest2024 のd0とplt3からdd4を作成し dd4.Rdataとして保存

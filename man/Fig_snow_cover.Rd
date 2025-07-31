@@ -16,6 +16,3 @@ Fig_snow_cover
 Fig_snow_cover()
 
 }
-\seealso{
-\code{\link{Fig_snow_depth}}
-}

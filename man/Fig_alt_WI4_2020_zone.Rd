@@ -2,7 +2,8 @@
 % Please edit documentation in R/WI.R
 \name{Fig_alt_WI4_2020_zone}
 \alias{Fig_alt_WI4_2020_zone}
-\title{Fig_alt_WI4_2020_JP}
+\title{Fig_alt_WI4_2020_JP
+FEM:Fig.7}
 \usage{
 Fig_alt_WI4_2020_zone(plt = plt5, term = 1)
 }
@@ -14,6 +15,7 @@ not return anything, draw only.
 }
 \description{
 Fig_alt_WI4_2020_JP
+FEM:Fig.7
 }
 \examples{
 Fig_alt_WI4_2020_zone()
