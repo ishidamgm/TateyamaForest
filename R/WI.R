@@ -329,10 +329,10 @@ Fig_alt_WI4_2020_JP<-function(plt=plt5,term=1){
 #' @export
 #'
 #' @examples
-#' Fig_alt_WI4_2020_JP()
+#' Fig_alt_WI4_2020_JP_hatch()
 #'
 #'
-Fig_alt_WI4_2020_JP<-function(plt=plt5,term=1){
+Fig_alt_WI4_2020_JP_hatch<-function(plt=plt5,term=1){
   plot(plt$alt,plt$WI,type="n",xlab="標高 (m)", ylab="温量指数 (℃・月)",
        xlim=c(1000,2300),ylim=c(22,68))
   #text(plt2$alt,plt2$WI,plt2$na,cex=0.8)
@@ -343,7 +343,8 @@ Fig_alt_WI4_2020_JP<-function(plt=plt5,term=1){
   ba.<-    ba.[,seq(1,6,2)]
   for(ii in 1:nrow(plt)){#ii=1
     pichart(as.numeric(ba.[ii,]),rx=40,ry=3,x=plt$alt[ii],y=plt$WI[ii],
-            col=c("Orange","Purple","SkyBlue")
+            col=c("Orange","Purple","SkyBlue"),
+            density =c(NA,30,100)
     )
 
   }
@@ -358,10 +359,12 @@ Fig_alt_WI4_2020_JP<-function(plt=plt5,term=1){
   legend(1025,37,
          legend=c("温帯樹種","移行帯樹種","移行帯樹種"),
          fill=c("Orange","Purple","SkyBlue"),
+         density =c(NA,30,100),
          title="胸高断面積合計割合",
          title.cex=1.1)
 
 }
+
 #' Fig_alt_WI4_2020_JP
 #'
 #' @param term term of monitoring

@@ -184,11 +184,11 @@ if(0){
 
 #　コラムname　####
 if(0){
-  clm_f <- c("f02","f03","f04","f05","f06")
-  clm_dbh <- c("d02","d03","d04","d05","d06")
-  clm_yr <- c("yr2","yr3","yr4","yr5","yr6")
+  clm_f <- c("f01","f02","f03","f04","f05","f06","f07")
+  clm_dbh <- c("d01","d02","d03","d04","d05","d06","d07")
+  clm_yr <- c("yr1","yr2","yr3","yr4","yr5","yr6","yr7")
 
-  ##save(vital.clm,dbh.clm,yr.clm,file="../data/clm.RData") ####
+  ##save(clm_f,clm_dbh,clm_yr,file="data/clm.RData") #### 2026/3/24
 }
 
 # TateyamaForest_dd_dd2.Rdata ####
