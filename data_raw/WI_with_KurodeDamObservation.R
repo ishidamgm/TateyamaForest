@@ -170,6 +170,11 @@ rownames(wi.)<-plt4$na
 WI_with_KurodeDamObservation <- wi.
 # save(WI_with_KurodeDamObservation,file="WI_with_KurodeDamObservation.RData")
 
+#欠測年　2003,2004,2014
+yr<-as.numeric(rownames(WI_with_KurodeDamObservation))
+diff(yr)
+setdiff(1965:2024,yr)
+
 
 
 

@@ -27,7 +27,7 @@ par(mfrow=c(1,3))
 dbh_hist_term1to7(plotname="Kaminokodaira",main="Ecotone plot",species="オオシラビソ",legend=F)
 dbh_hist_term1to7(plotname="Matsuotoge",main="Subarctic plot",species="オオシラビソ",legend=F)
 dbh_hist_term1to7(plotname="Kagamiishi",main="Timberline plot",species="オオシラビソ",legend=F,breaks=seq(0,30,5))
-legend(1.5,53,legend=c("Dead Standing (fallen)","Dead Standing ","Living"),
+legend(1.5,53,legend=c("Dead Standing (fallen)","Dead Standing(not fallen)","Living"),
  fill=c("black","black","white"),density=c(NA,20,NA))
 
 }

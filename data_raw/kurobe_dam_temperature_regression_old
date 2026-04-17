@@ -1,0 +1,4 @@
+"","Annual_mean_temperature","Intercept","Pr.1","Coefficient","Pr.2","Adjusted_R_squared","p_value","Pr.3"
+"1","daily_Maximum",-91.455023,"***",0.05113,"***",0.7137,"< 2.2e-16","***"
+"2","daily_Mean",-47.93241,"***",0.02734,"***",0.405,"8.142e-08","***"
+"3","daily_Minimum",-4.409797,"",0.003551,"",-0.01128,"0.5368",""

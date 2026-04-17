@@ -124,19 +124,210 @@ death_ratio
 # 確認事項： 20260323 ####
 
 ## 密度の数値（特にTimberline: 3,008 stems/ha）の確認 ####
-plt4$na
+plt5$na
 i<-1
-d<-subset(dd5,plot==plt4$na[i])
+d<-subset(dd5,plot==plt5$na[i])
+nrow(d)
 apply(d[,clm_dbh],1,max,na.rm=T)<10
 apply(d[,clm_dbh],1,pmax,na.rm=T)
 clm_dbh
 max_dbh <- do.call(pmax, c(d[, clm_dbh], na.rm = TRUE))
+sum(!is.na(max_dbh))
 
 d[610,]
-## 2024年WIデータが未入手である旨の脚注確認 ####
 
-## Fig. 12の実際の再設計作業（データがあれば作図もお手伝いできます） ####
+# 20260326 ####
+
+## Fig. 12の実際の再設計作業 ####
 
 ## Section 2.5の統計解析記述の最終確認 ####
 
+# データ書き出し用コード
 
+# 1. BAデータ（各プロット・各期間・樹種別）
+# ba_dataというオブジェクト名は実際のものに合わせてください
+write.csv(ba_data, "ba_data.csv", row.names = FALSE)
+
+# 2. 積雪深・積雪期間の年別データ
+snow
+# write.csv(snow, "snow_data.csv", row.names = FALSE)
+# Snow ####
+#' Fig_snow_cover
+#'
+#' @param dat
+#'
+#' @return
+#' @export
+#'
+#' @examples
+#' Fig_snow_cover()
+#'
+Fig_snow_cover<- function(dat=snow){
+
+  op <- par(no.readonly=T)
+
+  CP <- T  # カラーか白黒か
+
+  grdf <- data.frame(pl = c("浄土山","鏡石","松尾峠","美松","上ノ小平",
+                            "有峰","ブナ平","ブナ坂","美女平","富山"),
+                     pch = c(24,21,22,24, 4,23,25,21, 8, 17),
+                     bg = if(CP) c(5,NA,NA,NA,NA,NA,NA,2,NA,NA) else c(8,NA,NA,NA,NA,NA,NA,1,NA,NA),
+                     lty = c( 3, 1, 3, 1, 1, 1, 3, 1, 3, 1),
+                     col = if(CP) c(5,5,4,4,3,2,2,2,2,1) else 1,
+                     stringsAsFactors=F
+  )[c(2,3,5,8),]
+
+  grdf$col=rev(c( "darkolivegreen4", "blueviolet" , "blue", "cyan3"  ))
+  grdf$pch=rev(c(13,11,17,8))
+  grdf$lty=c(2,2,2,2)
+
+
+  gd <- dat
+  gd$val <- gd$pe
+
+  gd <- subset(gd,select=c(pl,yr,val))
+
+  gd <- subset(gd,yr >= 1999)
+
+  table(gd$pl,gd$yr)
+  all(table(gd$pl,gd$yr) == 1)
+
+
+
+  # par(mar=c(3.5,4.5,1,1))
+  plot(gd$yr,gd$val,type="n",xaxt="n",
+       xlim=range(gd$yr),ylim=c(0,max(gd$val,na.rm=T)),
+       ann=F,bty="l",las=1)
+  axis(1,min(gd$yr):max(gd$yr),las=2,cex=0.8)
+  mtext("Annual snow cover duration (days)",2,3)
+  mtext("Year",1,3)
+
+  for(i in 1:nrow(grdf)){
+    cpl <- grdf$pl[i]
+    gds <- subset(gd,pl == cpl)
+    gds <- gds[order(gds$yr),]
+    cdf <- subset(grdf,pl == cpl)
+    lines(gds$yr,gds$val,type="b",
+          col=cdf$col,bg=cdf$bg,pch=cdf$pch,lty=cdf$lty)
+  }
+
+  n<-c(2,4,5,7)
+  plot_name <-c("Temperate plot","Ecotone plot","Subarctic plot","Timberline plot")
+  legend(2010,80,plot_name,pch=leg$pch[n],col=leg$col[n],lty=leg$lty[n],cex=0.8)
+
+  par(op)
+}
+
+
+
+#' Fig_snow_depth
+#'
+#' @param dat
+#'
+#' @return
+#' @export
+#'
+#' @examples
+#' Fig_snow_depth()
+#'
+Fig_snow_depth<- function(dat=snow){
+
+  op <- par(no.readonly=T)
+
+  CP <- T  # カラーか白黒か
+
+  grdf <- data.frame(pl = c("浄土山","鏡石","松尾峠","美松","上ノ小平",
+                            "有峰","ブナ平","ブナ坂","美女平","富山"),
+                     pch = c(24,21,22,24, 4,23,25,21, 8, 17),
+                     bg = if(CP) c(5,NA,NA,NA,NA,NA,NA,2,NA,NA) else c(8,NA,NA,NA,NA,NA,NA,1,NA,NA),
+                     lty = c( 3, 1, 3, 1, 1, 1, 3, 1, 3, 1),
+                     col = if(CP) c(5,5,4,4,3,2,2,2,2,1) else 1,
+                     stringsAsFactors=F
+  )[c(3,5,8),]
+
+  # grdf$col=c( "darkolivegreen4", "blueviolet" , "blue" )
+  # grdf$pch=c(13,11,17)
+  # grdf$lty=c(2,2,2)
+
+  grdf$col=c( "blue", "blueviolet" , "darkolivegreen4" )
+  grdf$pch=c(17,11,13)
+  grdf$lty=c(2,2,2)
+
+
+
+  gd <- dat
+  gd$val <- gd$dep
+  gd <- subset(gd,select=c(pl,yr,val))
+  gd <- subset(gd,yr >= 2004)
+
+  table(gd$pl,gd$yr)
+  all(table(gd$pl,gd$yr) == 1)
+
+
+  # par(mar=c(3.5,4.5,1,1))
+  plot(gd$yr,gd$val,type="n",xaxt="n",
+       xlim=range(gd$yr),ylim=c(0,max(gd$val,na.rm=T)),
+       ann=F,bty="l",las=1)
+  axis(1,min(gd$yr):max(gd$yr),las=2)
+  mtext("Maximum snow depth (cm)",2,3)
+  mtext("Year",1,3)
+
+  for(i in 1:nrow(grdf)){
+    cpl <- grdf$pl[i]
+    gds <- subset(gd,pl == cpl)
+    gds <- gds[order(gds$yr),]
+    cdf <- subset(grdf,pl == cpl)
+    lines(gds$yr,gds$val,type="b",
+          col=cdf$col,bg=cdf$bg,pch=cdf$pch,lty=cdf$lty)
+  }
+
+  n<-c(2,4,5)
+  plot_name <-c("Temperate plot","Ecotone plot","Subarctic plot")
+  legend(2011,180,plot_name,pch=leg$pch[n],col=leg$col[n],lty=leg$lty[n],cex=0.8)
+
+  #par(op)
+}
+
+# 3. Fig.13用累積死亡率データ
+# すでにdd4_abies.csvとplt2.csvから計算可能ですが、
+# 既存のオブジェクトがあればそのまま書き出してください
+write.csv(cumulative_mortality, "cumulative_mortality.csv", row.names = FALSE)
+
+# 4. dd4全種版（Fig.11のDBH分布用）
+write.csv(dd4, "dd4_all_species.csv", row.names = FALSE)
+
+
+# fig7b_species_ratio.csv　####
+
+#load("sp_ba_ratio.RData")
+#load("SpeciesList2.RData")  # またはパッケージからロード
+
+plot. <- "Kaminokodaira"
+bar.  <- sp_ba_ratio[[plot.]]
+sp.   <- rownames(bar.)
+Year  <- as.numeric(colnames(bar.))
+
+# Panel (a): zone別相対BA
+zone. <- SpeciesList2$zone[match(sp., SpeciesList2$spj)]
+bar_zone <- bar.
+rownames(bar_zone) <- zone.
+bar_agg <- aggregate(. ~ zone.,
+                     data = data.frame(bar_zone), FUN = sum)
+
+result_a <- data.frame(Year = Year)
+for (z in c("Temperate","Ecotone","Subarctic")) {
+  vals <- as.numeric(bar_agg[bar_agg$zone. == z, -1])
+  result_a[[z]] <- vals / vals[1]
+}
+write.csv(result_a, "fig7a_zone_ratio.csv", row.names = FALSE)
+
+# Panel (b): 主要樹種相対BA（%）
+result_b <- data.frame(Year = Year)
+for (sp_j in c("オオシラビソ","ブナ","スギ")) {
+  if (sp_j %in% rownames(bar.)) {
+    vals <- as.numeric(bar.[sp_j, ])
+    result_b[[sp_j]] <- 100 * vals / vals[1]
+  }
+}
+write.csv(result_b, "fig7b_species_ratio.csv", row.names = FALSE)
+cat("Done\n")

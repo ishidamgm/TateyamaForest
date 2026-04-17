@@ -4,13 +4,13 @@
 \alias{Fig_kurobe_dam_temperature}
 \title{Title}
 \usage{
-Fig_kurobe_dam_temperature()
+Fig_kurobe_dam_temperature(d = kurobe_dam_temperature)
 }
 \description{
 Title
 }
 \examples{
-Fig_kurobe_dam_temperature()
-
+res<-Fig_kurobe_dam_temperature()
+res
 
 }

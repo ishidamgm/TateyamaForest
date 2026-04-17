@@ -7,7 +7,7 @@
 Fig_yr_ba_kaminokodaira_Cryptomeria_Fagus_Abies_2024()
 }
 \value{
-nothing, only output figure
+data frame of this Figure data
 }
 \description{
 Draw a figure relatinships between year and basal area ratio for Fagus - Abies in Kagamiishi in 2024

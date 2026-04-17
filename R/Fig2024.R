@@ -203,7 +203,7 @@ Fig_yr_ba_kaminokodaira_Fagus_Abies_2024 <- function(){
 # Kaminokodaira  Cryptomeria - Fagus - Abies ####
 #' Draw a figure relatinships between year and basal area ratio for Fagus - Abies in Kagamiishi in 2024
 #'
-#' @return nothing, only output figure
+#' @return data frame of this Figure data
 #' @export
 #'
 #' @examples
@@ -221,21 +221,30 @@ Fig_yr_ba_kaminokodaira_Cryptomeria_Fagus_Abies_2024 <- function(){
   rba.sp2 <- bar.[sp.2,]/bar.[sp.2,1]    #relative basal area
   rba.sp3 <- bar.[sp.3,]/bar.[sp.3,1]    #relative basal area
   plot(Year,rba.sp1,ylab="Ratio of total basal area", ylim=c(.4,1.8),
-       type="b",lwd=3,pch=2,col="blue", main="In the Ecotone Plot",cex=1.2,cex.lab=1.4)
+       type="b",lwd=3,pch=2,col="blue",cex=1.2,cex.lab=1.2,
+       #main="In the Ecotone Plot"
+       )
   lines(Year,rba.sp2,type="b",col="orange",lwd=3,cex=1.2)
   lines(Year,rba.sp3,type="b",col="red",lwd=3,pch=17,cex=1.2)
   abline(h=1,col="red",lty=2,lwd=2)
-  legend(2000,1.8,c("Abies mariesii","Fagus crenata","Cryptomeria japonica"),pch=c(2,1,17),col=c("blue","orange","red"),cex=1.2,lwd=2)
+  sp=c("Abies mariesii","Fagus crenata","Cryptomeria japonica")
+  legend(2000,1.8,sp,pch=c(2,1,17),col=c("blue","orange","red"),cex=1,lwd=2)
 
+
+
+  d<-data.frame(sp=rep(sp,each=7),year=rep(Year,3),ba_ratio=c(rba.sp1,rba.sp2,rba.sp3 ))
+  return(d)
+  # saveRDS(d, file = "Fig_yr_ba_kaminokodaira_Cryptomeria_Fagus_Abies_2024.rds")
   # bar.[,"2024"]/bar.[,"2000"]
   # colSums(sp_ba$Kaminokodaira)
 
 }
 
-# Fig_yr_ba_kaminokodaira_zone_2024 ####
+# Fig_yr_ba_kaminokodaira_zone_2024
 #' Draw a figure relationships between year and basal area ratio for species main distribution zone in Kagamiishi in 2024
 #'
-#' @return nothing, only output figure
+#' @return data frame of this Figure data
+#'
 #' @export
 #'
 #' @examples
@@ -257,14 +266,43 @@ Fig_yr_ba_kaminokodaira_zone_2024 <- function(){
 
 
   plot(Year,rba.Subarctic,ylab="Ratio of total basal area", ylim=c(0.5,1.1),
-       type="b",lwd=2,pch=17,col="skyblue", main="In the Ecotone Plot")
+       type="b",lwd=2,pch=17,col="skyblue",
+       cex=1.2,cex.lab=1.2,
+       #, main="In the Ecotone Plot"
+       )
   lines(Year,rba.Ecotone,type="b",col="purple",lwd=2,pch=8)
   lines(Year,rba.Temperate,type="b",col="orange",lwd=2,pch=16)
   abline(h=1,col="red",lty=2,lwd=2)
-  legend(2000,0.7,c("Subarctic tree species","Ecotone tree species","Temperate tree species"),lwd=2,pch=c(17,8,16),col=c("skyblue","purple","orange"),cex=1)
+  sp<-c("Subarctic tree species","Ecotone tree species","Temperate tree species")
+  legend(2000,0.7,sp,
+         lwd=2,pch=c(17,8,16),col=c("skyblue","purple","orange"),cex=1)
+
+  d<-data.frame(sp=rep(sp,each=7),year=rep(Year,3),ba_ratio=as.numeric(c(rba.Subarctic,rba.Ecotone,rba.Temperate )))
+  return(d)
+  # saveRDS(d, file = "Fig_yr_ba_kaminokodaira_zone_2024.rds")
 
 }
 
+
+
+
+#' Title
+#'
+#' @returns
+#' @export
+#'
+#' @examples
+#' Fig_yr_ba_Kaminoko_JVS2()
+Fig_yr_ba_Kaminoko_JVS2<-function(){
+  old_par <- par(no.readonly = TRUE)
+
+  par(mfrow=c(1,2))
+  Fig_yr_ba_kaminokodaira_zone_2024()
+  mtext("(a)", side = 3, adj = 0, line = 0.5, cex = 1.2, font = 2)
+  Fig_yr_ba_kaminokodaira_Cryptomeria_Fagus_Abies_2024()
+  mtext("(b)", side = 3, adj = 0, line = 0.5, cex = 1.2, font = 2)
+  par(old_par)
+}
 
 
 #' Draw simple pi chart
@@ -462,7 +500,7 @@ sp_dominant_ba_ratio_calc <- function(){
 #' dbh_hist_term1to7(plotname="Kaminokodaira",main="Ecotone plot",species="オオシラビソ",legend=F)
 #' dbh_hist_term1to7(plotname="Matsuotoge",main="Subarctic plot",species="オオシラビソ",legend=F)
 #' dbh_hist_term1to7(plotname="Kagamiishi",main="Timberline plot",species="オオシラビソ",legend=F,breaks=seq(0,30,5))
-#' legend(1.5,53,legend=c("Dead Standing (fallen)","Dead Standing ","Living"),
+#' legend(1.5,53,legend=c("Dead Standing (fallen)","Dead Standing(not fallen)","Living"),
 #'  fill=c("black","black","white"),density=c(NA,20,NA))
 #'
 dbh_hist_term1to7 <- function(plotname="Kaminokodaira",main="",species="オオシラビソ",

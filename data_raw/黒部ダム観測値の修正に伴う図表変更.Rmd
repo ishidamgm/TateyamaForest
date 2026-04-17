@@ -1,0 +1,162 @@
+
+---
+title: "黒部ダム観測値の修正に伴う図表変更"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+    toc_depth: 4
+    df_print: paged
+---
+
+
+
+```{r}
+library(package="TateyamaForest")
+#help(package="TateyamaForest")
+#data(package="TateyamaForest")
+
+```
+
+# 黒部ダム月平均気温
+
+```{r}
+#Fig_year_WI_3()
+dd<-kurobe_1965_2024
+dd_plot<-function(dd=dd){
+  plot(dd$date,dd$max,type="l",col="red",ylim=c(-10,25),
+       xlab="year",ylab="Temperature at Kurobe dam")
+  lines(dd$date,dd$min,col="blue")
+  lines(dd$date,dd$mean,col="green")
+}
+dd_plot(dd)
+
+```
+
+
+# Fig_year_WI_3()
+```{r}
+TateyamaForest::Fig_year_WI_3()
+
+```
+WI_with_KurodeDamObservation   の修正が必要 ok
+plt5 -> plt6 ok
+
+## 温量指数のMann-Kendall検定と傾き
+
+```{r}
+data(wi_year)
+  d<-c()
+for (i in plt6$na){
+  yr=wi_year$year
+  d<-c(d,list(MannKendall_lm(yr,wi_year[,i])))
+}
+names(d)<-plt6$na
+d
+
+```
+
+### 温暖化と森林帯
+
+```{r}
+d<-subset(wi_year,year>1993)
+yr.<-d$yr.
+wi.<-d$Kaminokodaira
+ratio_wi55up<-100*sum(wi.>55)/length(wi.)
+ paste0("Ecotone plot crossed the ecotone–temperate boundary (WI = 55 °C·month) for the first time in 1994. In the period 2013–2024, ",round(ratio_wi55up,1),",% of years exceeded WI = 55")
+
+
+```
+
+
+
+# 統計再計算
+
+
+
+
+## オブジェクト生成
+
+```{r}
+  # オブジェクト生成
+  s <- new_statistics(
+    wi_year          = wi_year,
+    Abies_death_ratio = Abies_death_ratio,
+    f1_raw           = .data_Fig_yr_ba_kaminokodaira_Cryptomeria_Fagus_Abies_2024,
+    f2_raw           = .data_Fig_yr_ba_kaminokodaira_zone_2024
+  )
+
+  print(s)
+```
+
+
+
+## Pearson相関: WI vs. 累積死亡率
+
+```{r}
+
+
+Fig_Abies_death_ratio()
+
+res1 <- statistics_cor_WI_AbiesCumulativeMortality(s)
+res1
+```
+
+## ANCOVA: 累積死亡率 ~ year * plot
+
+```{r}
+
+
+res2 <- statistics_ANCOVA_Abies_CumulativeDeathRatio_year_plot(s)
+res2$pairwise
+```
+
+## Pearson相関: WI vs. BA比
+
+```{r}
+
+Fig_yr_ba_Kaminoko_JVS2()
+
+
+res3 <- statistics_cor_wi_ba_EcotonePlot(s)
+
+```
+
+## ANCOVA: BA比 ~ WI * 樹種/zone
+
+```{r}
+res4 <- statistics_ANCOVA_wi_ba_EcotonePlot(s)
+res4$by_species$slopes
+```
+## Table_TemperatureWIAbiesPopulation_cor()
+```{r}
+Table_TemperatureWIAbiesPopulation_cor()
+```
+
+<!-- ここは出力されない保留テキスト
+-------------
+# 統計再計算
+## ANCOVA
+
+```{r}
+  # オブジェクト生成
+  s <- new_statistics(
+    wi_year          = wi_year,
+    Abies_death_ratio = Abies_death_ratio,
+    f1_raw           = .data_Fig_yr_ba_kaminokodaira_Cryptomeria_Fagus_Abies_2024,
+    f2_raw           = .data_Fig_yr_ba_kaminokodaira_zone_2024
+  )
+
+  #print(s)
+
+  # 各統計の実行
+  res1 <- statistics_cor_WI_AbiesCumulativeMortality(s)
+  res2 <- statistics_ANCOVA_Abies_CumulativeDeathRatio_year_plot(s)
+  res3 <- statistics_cor_wi_ba_EcotonePlot(s)
+  res4 <- statistics_ANCOVA_wi_ba_EcotonePlot(s)
+
+  # 結果の取り出し例
+  res2$pairwise        # ペアワイズ比較表
+  res4$by_species$slopes  # 樹種別傾き
+```
+ -->

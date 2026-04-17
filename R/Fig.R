@@ -937,6 +937,7 @@ Fig_Abies_death_ratio<-function(){
   }
   names(Abies_death_ratio)<-plt.
 
+  # save(Abies_death_ratio,file="../../data/Abies_death_ratio.RData")
 
   leg.<-c(4,5,7)
   plot(  Abies_death_ratio[[1]],
@@ -944,20 +945,20 @@ Fig_Abies_death_ratio<-function(){
         xlim=c(1998,2026),
         pch=leg$pch[leg.[1]],col=leg$col[leg.[1]],lty=leg$lty[leg.[1]],
         main="Abies mariesii",
-        ylab="Mortality ratio",xlab="Year",cex.lab=1.2,lwd=2)
+        ylab="Cumulative Mortality ratio",xlab="Year",cex.lab=1.2,lwd=2)
 
   for (ii in 2:3){
     xy<-Abies_death_ratio[[ii]]
-    lines( xy,pch=leg$pch[leg.[ii]],col=leg$col[leg.[ii]],lty=leg$lty[leg.[ii]],lwd=2)
+    lines( xy,pch=leg$pch[leg.[ii]],col=leg$col[leg.[ii]],lty=leg$lty[leg.[ii]],lwd=3)
     points(xy,pch=leg$pch[leg.[ii]],col=leg$col[leg.[ii]],cex=1.5)
   }
 
 
 
   legend(2000,0.45,c("Ecotone plot","Subarctic plot","Timberline plot"),
-         pch=leg$pch[leg.],col=leg$col[leg.],lty=leg$lty[leg.],cex=1)
+         pch=leg$pch[leg.],col=leg$col[leg.],lty=leg$lty[leg.],cex=1.1)
 
-  return(list(Kaminokodaira=kami,Mmatuotoge=matu,Kagamiishi=kaga))
+  #return(list(Kaminokodaira=kami,Mmatuotoge=matu,Kagamiishi=kaga))
 
 }
 

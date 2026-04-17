@@ -76,12 +76,12 @@ F_kurobe_dum_mean_tmp <-function(year) {
 #'
 #'
 #' @examples
-#' Fig_kurobe_dam_temperature()
+#' res<-Fig_kurobe_dam_temperature()
+#' res
 #'
-#'
-Fig_kurobe_dam_temperature <- function(){
+Fig_kurobe_dam_temperature <- function(d=kurobe_dam_temperature){
 
-  d<-kurobe_dam_temperature
+
   # plot ####
   plot(d$year,d$max,type="b",pch=24,col="red",ylim=c(0,14),xlab="Year",ylab="Temperature (°C)",cex.lab=1.1)
   lines(d$year,d$min,type="b",pch=25,col="blue")
@@ -100,6 +100,7 @@ Fig_kurobe_dam_temperature <- function(){
 
   legend(1968,14,c("Maximum","Mean","Minimum"),pch=c(24,16,25),col=c("red","black","blue"),cex=0.9)
 
+  return(lm_)
 }
 
 
@@ -407,7 +408,7 @@ Fig_alt_WI4_2020<-function(plt=plt5,term=1){
 
 }
 
-#' Fig_alt_WI4_2020_JP
+#' Fig_alt_WI4_2020_zone()
 #' FEM:Fig.7
 #'
 #' @param term term of monitoring
@@ -449,6 +450,54 @@ Fig_alt_WI4_2020_zone<-function(plt=plt5,term=1){
          fill=c("Orange","Purple","SkyBlue"),
          title="Ratio of basal area",
          title.cex=1.0)
+
+}
+
+#' Fig_alt_WI4_2020_zone_2()
+#'
+#'
+#' @param term term of monitoring
+#' @return not return anything, draw only.
+#' @export
+#'
+#' @examples
+#' Fig_alt_WI4_2020_zone_2()
+#'
+#'
+Fig_alt_WI4_2020_zone_2<-function(plt=plt5,term=1){
+  plot(plt$alt,plt$WI,type="n",xlab="Above Sea Level (m)", ylab="Warmth Index (°C*month)",
+       xlim=c(1000,2500),ylim=c(20,68),cex.lab=1.2)
+  #text(plt2$alt,plt2$WI,plt2$na,cex=0.8)
+  abline(h=c(45,55),lty=2)
+  # pichart
+  ba.<-sp_zone_ba_live_dead2_ratio[[term]]
+  ba.<-ba.[match(plt$na,rownames(ba.)),]
+  ba.<-    ba.[,seq(1,6,2)]
+  for(ii in 1:nrow(plt)){#ii=1
+    pichart(as.numeric(ba.[ii,]),rx=40,ry=3,x=plt4$alt[ii],y=plt4$WI[ii],
+            col=c("Orange","Purple","SkyBlue")
+    )
+
+  }
+  # labels of picharts
+  plot_name <-c("Temperate plot","Ecotone plot","Subarctic plot","Timberline plot")
+  #text(plt2$alt,plt2$WI-5,plt2$na,cex=0.8)
+  text(plt4$alt,plt4$WI-5,  plot_name,cex=0.8)
+
+  # zone label
+  # text(1950,60,"Temperate zone",cex=2,col="Orange")
+  # text(1800,50,"Ecotone",cex=2,col="Purple")
+  # text(1600,40,"Subarctic zone",cex=2,col="SkyBlue")
+
+  text(2500,60,"Temperate zone",cex=1.2, adj = 1, font = 3,  col = "grey60")
+  text(2500,50,"Ecotone",cex=1.2, adj = 1, font = 3,  col = "grey60")
+  text(2500,40,"Subarctic zone",,cex=1.2, adj = 1, font = 3,  col = "grey60")
+
+  legend(1025,40,
+         legend=c("Temperate tree species","Ecotone tree species","Subarctic tree species"),
+         fill=c("Orange","Purple","SkyBlue"),
+         title="Ratio of basal area",
+         title.cex=0.8)
 
 }
 
@@ -719,6 +768,72 @@ Fig_year_WI_2<-function(){
   #legend(1965,82,plt5$na,cex=0.89,lty=1:4,lwd=2,col=leg$col[c(2,4,5,7)]) #pch=1:4,
   legend(1960,82,plot_name,cex=0.89,lty=1:4,lwd=2,col=leg$col[c(2,4,5,7)]) #pch=1:4,
 
+}
+
+#
+#' Fig_year_WI_JP_3
+#'
+#' @return
+#' @export
+#'
+#' @examples
+#'  Fig_year_WI_3()
+#'
+Fig_year_WI_3<-function(){
+  intact_plot <- c("Bunazaka","Kaminokodaira","Matsuotoge","Kagamiishi")
+  plot_no <- match(intact_plot,colnames(wi_year))
+  legend_no <- match(intact_plot,leg$n)
+  par(mgp=c(2.5, 1, 0))
+  plot(0,type="n",xlab="Year", ylab="Warmth Index (degrees Celsius*month)",
+       xlim=c(1960,2025),ylim=c(8,80),cex.lab=1.1,cex.axis=1.1)
+
+  text(1960,72,"Temperate zone",cex=1.2, adj = 0, font = 3,  col = "grey60")
+  text(1960,47,"Ecotone",cex=1.2, adj = 0, font = 3,  col = "grey60")
+  text(1960,33,"Subarctic zone",,cex=1.2, adj = 0, font = 3,  col = "grey60")
+
+
+  abline(h=c(45,55),lty=2,lwd=3,col="red")
+  wi.<-wi_year #WI_with_KurodeDamObservation
+  for (i in 1:length(plot_no)){
+    lines(wi.$year,wi.[,plot_no[i]],type="l",lty=i, lwd=2,#pch=i,
+          col=leg$col[legend_no[i]])
+
+  }
+  #______________
+  #lm(wi.[,plot_no[i]]~wi.$year)
+  # Mann-Kendall検定
+  # mk <- MannKendall(wi)
+  #
+  # # 線形回帰（傾き/decade）
+  # lm_fit <- lm(wi ~ years)
+  # slope_decade <- coef(lm_fit)[2] * 10
+  #
+  # cat(name, "\n")
+  # cat("  z =", qnorm(mk$sl/2, lower.tail = FALSE), "\n")
+  # cat("  p =", mk$sl, "\n")
+  # cat("  slope =", round(slope_decade, 2), "WI per decade\n\n")
+
+
+  #______________
+
+  for (ii in match(intact_plot,plt6$na)){
+    yr.<-plt6[ii,paste0("yr",1:7)]
+    wi.<-plt6[ii,paste0("wi",1:7)]
+    points(yr.,wi.)
+    text(yr.-0,wi.+2,1:7,cex=1)
+  }
+
+
+  legend(2003, 24, plot_name,
+         cex = 0.9,
+         lty = 1:4,
+         lwd = 2,
+         col = leg$col[c(2, 4, 5, 7)],
+         y.intersp = 0.7,    # 行間（デフォルト1.0）
+         x.intersp = 0.2,    # 線とテキストの間隔
+         box.lwd   = 0.5,    # 枠線の太さ
+         inset     = 0.005    # 枠内余白
+  )
 }
 
 

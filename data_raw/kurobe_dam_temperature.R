@@ -48,3 +48,58 @@ kurobe_dam_temperature_regression
 kurobe_dam_temperature<-d
 # save(kurobe_dam_temperature,file="data/kurobe_dam_temperature.RData")
 # save(kurobe_dam_temperature_regression,file="data/kurobe_dam_temperature_regression.RData")
+
+# 暫定推定 kurobe_dam_temperature_2024 ####
+# 富山気象台のデータを用いた暫定推定  変化率同じの前提
+
+library(clipr)
+ToyamaMet <- read_clip_tbl()
+ToyamaMet_1939_2025 <- ToyamaMet[,c("year", "Tmean", "Tmax","Tmin" )]
+# saveRDS(ToyamaMet_1939_2025,file="ToyamaMet_1939_2025.rds")
+toya<-ToyamaMet_1939_2025
+
+
+ToyamaKishoudaiTemp<-data.frame(yaer=2022:2024,max=c(15.1,16.1,15.9),min=c(11.2,11.9,12.2),mean=c(11.2,11.9,12.2))
+ToyamaKishoudaiTemp
+
+TmaxEstimate_from2023to2024<-function(tmax2023)15.9/16.1*tmax2023
+TminEstimate_from2023to2024<-function(tmin2023)12.2/11.9*tmin2023
+#TmeanEstimate_from2023to2024<-function(tmean2023)12.2/11.9*tmean2023
+
+
+min=TminEstimate_from2023to2024(2.8)
+max=TmaxEstimate_from2023to2024(12.7)
+mean=(max+min)/2
+(est2024 <-data.frame(wareki="R6", year=2024, min , max, mean))
+
+kurobe_dam_temperature_2024estimated<-rbind(kurobe_dam_temperature,est2024)
+tail(kurobe_dam_temperature_2024estimated)
+# saveRDS(kurobe_dam_temperature_2024estimated,file="kurobe_dam_temperature_2024estimated.rds")
+
+#欠測年#
+#library(tidyverse)
+kuro<-kurobe_dam_temperature_2024estimated
+#as_tibble(kuro)
+yr_lack<-kuro$year[which(diff(kuro$year)==2)]+1　　#　2003 2005 2014
+(kuro.<-kuro[match(yr_lack-1,kuro$year),])
+kuro..<-kuro.
+kuro..$year<-yr_lack
+kuro..$wareki<-""
+#
+
+for(ii in 1:nrow(kuro..)){
+  i<-which(toya$year==yr_lack[ii])
+
+  rate.min<-toya[i,"Tmin"]/toya[i-1,"Tmin"]
+  rate.max<-toya[i,"Tmax"]/toya[i-1,"Tmax"]
+  rate.mean<-toya[i,"Tmean"]/toya[i-1,"Tmean"]
+  kuro..[ii,"min"]<-round(rate.min*kuro..[ii,"min"],2)
+  kuro..[ii,"max"]<-round(rate.max*kuro..[ii,"max"],2)
+  kuro..[ii,"mean"]<-round(rate.mean*kuro..[ii,"mean"],2)
+}
+kuro...<-rbind(kuro,kuro..)
+kuro...<-kuro...[order(kuro...$year),]
+nrow(kuro)
+nrow(kuro...)
+
+# saveRDS(kuro...,file="kurobe_dam_temperature_2024estimated.rds")

@@ -7,7 +7,7 @@
 Fig_yr_ba_kaminokodaira_zone_2024()
 }
 \value{
-nothing, only output figure
+data frame of this Figure data
 }
 \description{
 Draw a figure relationships between year and basal area ratio for species main distribution zone in Kagamiishi in 2024
