@@ -18,7 +18,7 @@
 #' @param ref       参照グループ
 #' @param other     比較グループ
 #' @returns named numeric vector
-.pairwise_slope <- function(data, response, covariate, groupvar, ref, other) {
+pairwise_slope <- function(data, response, covariate, groupvar, ref, other) {
   data$grp <- factor(data[[groupvar]],
                      levels = c(ref, setdiff(unique(data[[groupvar]]), ref)))
   fml  <- as.formula(paste(response, "~", covariate, "* grp"))
@@ -40,14 +40,14 @@
 #' @param covariate 共変量名（文字列）
 #' @param groupvar  グループ変数名（文字列）
 #' @returns data.frame（結果表）
-.run_pairwise <- function(data, response, covariate, groupvar) {
+run_pairwise <- function(data, response, covariate, groupvar) {
   groups <- levels(factor(data[[groupvar]]))
   pairs  <- combn(groups, 2, simplify = FALSE)
   n_pairs <- length(pairs)
 
   results <- data.frame()
   for (pair in pairs) {
-    res    <- .pairwise_slope(data, response, covariate, groupvar,
+    res    <- pairwise_slope(data, response, covariate, groupvar,
                               pair[1], pair[2])
     results <- rbind(results, data.frame(
       comparison  = paste(pair[1], "vs", pair[2]),

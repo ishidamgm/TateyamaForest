@@ -47,7 +47,7 @@
 
   results <- data.frame()
   for (pair in pairs) {
-    res    <- .pairwise_slope(data, response, covariate, groupvar,
+    res    <- pairwise_slope(data, response, covariate, groupvar,
                               pair[1], pair[2])
     results <- rbind(results, data.frame(
       comparison  = paste(pair[1], "vs", pair[2]),

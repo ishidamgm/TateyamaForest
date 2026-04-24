@@ -25,4 +25,5 @@ new_statistics(wi_year, Abies_death_ratio, f1_raw, f2_raw)
 s <- new_statistics(wi_year, Abies_death_ratio,
                     .data_Fig_yr_ba_kaminokodaira_Cryptomeria_Fagus_Abies_2024,
                     .data_Fig_yr_ba_kaminokodaira_zone_2024)
+s
 }

@@ -18,7 +18,7 @@
 #' @param ref       参照グループ
 #' @param other     比較グループ
 #' @returns named numeric vector
-.pairwise_slope <- function(data, response, covariate, groupvar, ref, other) {
+pairwise_slope <- function(data, response, covariate, groupvar, ref, other) {
   data$grp <- factor(data[[groupvar]],
                      levels = c(ref, setdiff(unique(data[[groupvar]]), ref)))
   fml  <- as.formula(paste(response, "~", covariate, "* grp"))
@@ -40,14 +40,14 @@
 #' @param covariate 共変量名（文字列）
 #' @param groupvar  グループ変数名（文字列）
 #' @returns data.frame（結果表）
-.run_pairwise <- function(data, response, covariate, groupvar) {
+run_pairwise <- function(data, response, covariate, groupvar) {
   groups <- levels(factor(data[[groupvar]]))
   pairs  <- combn(groups, 2, simplify = FALSE)
   n_pairs <- length(pairs)
 
   results <- data.frame()
   for (pair in pairs) {
-    res    <- .pairwise_slope(data, response, covariate, groupvar,
+    res    <- pairwise_slope(data, response, covariate, groupvar,
                               pair[1], pair[2])
     results <- rbind(results, data.frame(
       comparison  = paste(pair[1], "vs", pair[2]),
@@ -82,6 +82,7 @@
 #' s <- new_statistics(wi_year, Abies_death_ratio,
 #'                     .data_Fig_yr_ba_kaminokodaira_Cryptomeria_Fagus_Abies_2024,
 #'                     .data_Fig_yr_ba_kaminokodaira_zone_2024)
+#' s
 new_statistics <- function(wi_year, Abies_death_ratio, f1_raw, f2_raw) {
 
   ## Kaminokodaira 調査年のWI
@@ -219,7 +220,7 @@ statistics_ANCOVA_Abies_CumulativeDeathRatio_year_plot <- function(s) {
   for (nm in names(slopes))
     cat(sprintf("  %-20s %.6f /yr\n", nm, slopes[nm]))
 
-  pw <- .run_pairwise(s$death_data, "death_ratio", "year", "plot")
+  pw <- run_pairwise(s$death_data, "death_ratio", "year", "plot")
   cat("\n--- Pairwise slope comparisons (death_ratio ~ year) ---\n")
   print(pw)
 
@@ -273,6 +274,7 @@ statistics_cor_wi_ba_EcotonePlot <- function(s) {
 #' @export
 #'
 #' @examples
+#' # old
 #'  s <- new_statistics(
 #' wi_year          = wi_year,
 #' Abies_death_ratio = Abies_death_ratio,
@@ -281,6 +283,8 @@ statistics_cor_wi_ba_EcotonePlot <- function(s) {
 #' )
 #' (res<-statistics_ANCOVA_wi_ba_EcotonePlot(s))
 #' str(res)
+#'
+#' #
 statistics_ANCOVA_wi_ba_EcotonePlot <- function(s) {
   stopifnot(inherits(s, "statistics"))
   message("ANCOVA: BA ratio ~ WI * species/zone")
@@ -301,7 +305,7 @@ statistics_ANCOVA_wi_ba_EcotonePlot <- function(s) {
     for (nm in names(slopes))
       cat(sprintf("  %-28s %.5f /WI\n", nm, slopes[nm]))
 
-    pw <- .run_pairwise(data, "ba_ratio", "WI", "sp")
+    pw <- run_pairwise(data, "ba_ratio", "WI", "sp")
     cat("\n--- Pairwise slope comparisons (ba_ratio ~ WI) ---\n")
     print(pw)
 
@@ -313,6 +317,57 @@ statistics_ANCOVA_wi_ba_EcotonePlot <- function(s) {
 
   invisible(list(by_species = res_sp, by_zone = res_zone))
 }
+
+
+
+
+#' ba_wi_plot3
+#'
+#' @param wi.
+#' @param d2
+#'
+#' @returns
+#' @export
+#'
+#' @examples
+#'
+#' d<-TemperatureWIAbiesPopulation
+#' wi.<-subset(d,plot=="Kaminokodaira")$WI
+#' par(mfrow = c(2, 3))
+#' d2<-.data_Fig_yr_ba_kaminokodaira_Cryptomeria_Fagus_Abies_2024
+#' ba_wi_plot3(wi.,d2)
+#' d2<-.data_Fig_yr_ba_kaminokodaira_zone_2024
+#' ba_wi_plot3(wi.,d2)
+#'
+#'
+#'
+ba_wi_plot3<-function(wi.,d2){
+  sp. <- unique(d2$sp)
+
+  for (i in 1:3) {
+    d2.    <- subset(d2, sp == sp.[i])
+    ba.    <- d2.$ba_ratio
+    ba_mid <- (ba.[-length(ba.)] + ba.[-1]) / 2
+
+    res     <- lm(ba_mid ~ wi.)
+    cf      <- coef(res)
+    sm      <- summary(res)
+    r_val   <- sqrt(sm$r.squared) * sign(cf[2])
+    p_val   <- sm$coefficients[2, 4]
+
+    p_label <- ifelse(p_val < 0.001, "p < 0.001",
+                      sprintf("p = %.3f", p_val))
+
+    sub_text <- sprintf("y = %.4f x %+.4f,  r = %.3f,  %s",
+                        cf[2], cf[1], r_val, p_label)
+
+    plot(wi., ba_mid, main = sp.[i], sub = sub_text,
+         xlab = "WI (interval mean)", ylab = "BA ratio (midpoint)")
+    abline(res)
+  }
+}
+
+
 
 
 # ______________________________________________________
@@ -356,87 +411,116 @@ statistics_ANCOVA_wi_ba_EcotonePlot <- function(s) {
 #' tbl
 #' #write.csv(tbl, "Table_TemperatureWIAbiesPopulation_cor.csv", row.names = FALSE)
 #'
-Table_TemperatureWIAbiesPopulation_cor<-function(){
+#'  Pearson correlation coefficients between Climate factors and  Cumulative Mortarity of A.mariesii
+#'
+#'  population ratio (Condit et al.)
+#'
+#' @param p_values
+#'
+#' @returns
+#' @export
+#'
+#' @examples
+#'
+#' Table_TemperatureWIAbiesPopulation_cor()
+#'
+#'
+Table_TemperatureWIAbiesPopulation_cor <- function(p_values = TRUE) {
 
-
-  # ------ 1. データ読み込み ------
-  d <- read.csv("TemperatureWIAbiesPopulation.csv")
+  # 1. データ読み込み
+  d <- TemperatureWIAbiesPopulation
   d$plot <- factor(d$plot,
                    levels = c("Kaminokodaira", "Matsuotoge", "Kagamiishi"))
 
-  # ------ 2. 変数定義 ------
+  # 2. 変数定義
   clim_vars   <- c("WI", "Tmax", "Tmin", "Tmean")
   demo_vars   <- c("p", "m", "r")
+  demo_labels <- c(p = " (G)", m = " (M)", r = " (I)")
+  #demo_labels <- c(p = " Growth (G)", m = "  Mortality (M)", r = " Ingrowth (I)")
   plot_labels <- c(Kaminokodaira = "Ecotone",
                    Matsuotoge    = "Subarctic",
                    Kagamiishi    = "Timberline")
 
-  # ------ 3. ユーティリティ関数 ------
-
-  # 有意水準に応じたアスタリスクを返す
+  # 3. ユーティリティ関数
   sig_star <- function(p) {
     if      (p < 0.01) "**"
     else if (p < 0.05) "*"
     else               ""
   }
 
-  # r値と p値をセル文字列にフォーマット（例: "0.957**"）
-  fmt_cell <- function(r, p) {
-    sprintf("%s%s", formatC(r, format = "f", digits = 3), sig_star(p))
+  # 相関計算: r と p を返す
+  corr_one <- function(data, clim, dv) {
+    ct <- cor.test(data[[clim]], data[[dv]], method = "pearson")
+    list(r = round(ct$estimate, 3), p = round(ct$p.value, 4))
   }
 
-  # 1行分（1気候変数 × 3人口動態率）の相関を計算してフォーマット
-  corr_row <- function(data, clim) {
-    sapply(demo_vars, function(dv) {
-      ct <- cor.test(data[[clim]], data[[dv]], method = "pearson")
-      fmt_cell(round(ct$estimate, 3), ct$p.value)
-    })
+  # 4. セルの組み立て（p_values に応じて列構成を変える）
+  build_row <- function(data, clim, plot_label) {
+    cells <- lapply(demo_vars, function(dv) corr_one(data, clim, dv))
+    names(cells) <- demo_vars
+
+    if (p_values) {
+      # r列・p列・アスタリスク列の3列構成
+      out <- list(
+        "Plot"              = plot_label,
+         "variables" = clim
+      )
+      for (dv in demo_vars) {
+        out[[demo_labels[dv]]]               <- formatC(cells[[dv]]$r, format = "f", digits = 3)
+        out[[paste0(demo_labels[dv], " p")]] <- cells[[dv]]$p
+        out[[paste0(demo_labels[dv], " sig")]] <- sig_star(cells[[dv]]$p)
+      }
+    } else {
+      # アスタリスク付きr列のみ
+      out <- list(
+        "Plot"              = plot_label,
+        "Variables" = clim
+      )
+      for (dv in demo_vars) {
+        out[[demo_labels[dv]]] <- sprintf("%s%s",
+                                          formatC(cells[[dv]]$r, format = "f", digits = 3),
+                                          sig_star(cells[[dv]]$p))
+      }
+    }
+    as.data.frame(out, check.names = FALSE)
   }
 
-  # ------ 4. 表の組み立て ------
+  # 5. 表の組み立て
   rows <- list()
 
-  # プロット別（n=6）
+  # プロット別
   for (plt in levels(d$plot)) {
     df <- d[d$plot == plt, ]
     n  <- nrow(df)
     for (i in seq_along(clim_vars)) {
-      cr <- corr_row(df, clim_vars[i])
-      rows[[length(rows) + 1]] <- data.frame(
-        Plot               = if (i == 1) sprintf("%s (n=%d)", plot_labels[plt], n) else "",
-        "Climate variables" = clim_vars[i],
-        "Growth (G)"       = cr["p"],
-        "Mortality (M)"    = cr["m"],
-        "Ingrowth (I)"     = cr["r"],
-        check.names = FALSE
-      )
+      label <- if (i == 1) sprintf("%s (n=%d)", plot_labels[plt], n) else ""
+      rows[[length(rows) + 1]] <- build_row(df, clim_vars[i], label)
     }
   }
 
-  # プール（n=18）
+  # プール
   for (i in seq_along(clim_vars)) {
-    cr <- corr_row(d, clim_vars[i])
-    rows[[length(rows) + 1]] <- data.frame(
-      Plot               = if (i == 1) sprintf("Pooled (n=%d)", nrow(d)) else "",
-      "Climate variables" = clim_vars[i],
-      "Growth (G)"       = cr["p"],
-      "Mortality (M)"    = cr["m"],
-      "Ingrowth (I)"     = cr["r"],
-      check.names = FALSE
-    )
+    label <- if (i == 1) sprintf("Pooled (n=%d)", nrow(d)) else ""
+    rows[[length(rows) + 1]] <- build_row(d, clim_vars[i], label)
   }
 
   tbl <- do.call(rbind, rows)
   rownames(tbl) <- NULL
 
-  # ------ 5. コンソール表示 ------
-  cat("Table 6. Pearson correlation coefficients\n")
-  cat("* p <0.05, ** p <0.01\n\n")
-  print(tbl, row.names = FALSE)
+  # # 6. コンソール表示
+  # cat("Table 6. Pearson correlation coefficients\n")
+  # if (p_values) {
+  #   cat("(r and p values shown separately)\n\n")
+  # } else {
+  #   cat("* p <0.05, ** p <0.01\n\n")
+  # }
+  # print(tbl, row.names = FALSE)
 
   return(tbl)
-
 }
+
+
+
 
 
 #' Mann-Kendall test and lm regression analysis
@@ -457,4 +541,49 @@ MannKendall_lm<-function(yr=wi_yaer$year,v=wi_yaer$Kaminokodaira){
   lm_fit <- lm(v ~ yr)
   return(list(MannKendall=mk,lm_fit=summary(lm_fit)))
 
+}
+
+#' Abies_mortality_ratio_midpoint
+#'
+#' @returns
+#' @export
+#'
+#' @examples
+#' mortality<-unlist(Abies_mortality_ratio_midpoint())
+#' BAratio<-unlist(Abies_ba_ratio_midpoint())
+#' TemperatureWIAbies_Population_BA_Mortality<-data.frame(TemperatureWIAbiesPopulation,BAratio,mortality)
+#' # save(TemperatureWIAbies_Population_BA_Mortality,file="data/TemperatureWIAbies_Population_BA_Mortality.RData")
+Abies_mortality_ratio_midpoint<-function(){
+  .<-Abies_death_ratio
+
+  plot.<-c("Kaminokodaira","Matsuotoge","Kagamiishi")
+  d<-c()
+  for (ii in 1:length(plot.)){
+    d.<-.[[plot.[ii]]]$death_ratio
+    d<-c(d,list((d.[-1]+d.[-length(d.)])/2))
+  }
+  names(d)<-plot.
+  return(d)
+}
+
+
+#' Abies_ba_ratio_midpoint
+#'
+#' @returns
+#' @export
+#'
+#' @examples
+#' Abies_ba_ratio_midpoint()
+Abies_ba_ratio_midpoint<-function(){
+  .<-sp_ba
+  sp.<- "オオシラビソ"
+  plot.<-c("Kaminokodaira","Matsuotoge","Kagamiishi")
+  rba.<-c()
+  for (ii in 1:length(plot.)){
+    bar.<-.[[plot.[ii]]]
+    rba.sp <-bar.[sp.,]/bar.[sp.,1]
+    rba.<-c(rba.,list((rba.sp[-1]+rba.sp[-length(rba.sp)])/2))
+  }
+  names(rba.)<-plot.
+  return(rba.)
 }

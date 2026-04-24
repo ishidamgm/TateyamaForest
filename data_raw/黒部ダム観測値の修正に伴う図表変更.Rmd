@@ -11,8 +11,11 @@ output:
 
 
 
-```{r}
+```{r, message = FALSE, warning = FALSE}
 library(package="TateyamaForest")
+library(kableExtra)
+library(ggplot2)
+library(patchwork)
 #help(package="TateyamaForest")
 #data(package="TateyamaForest")
 
@@ -30,6 +33,19 @@ dd_plot<-function(dd=dd){
   lines(dd$date,dd$mean,col="green")
 }
 dd_plot(dd)
+
+(.<-kurobe_dam_temperature)
+
+Fig_kurobe_dam_temperature()
+
+# y1<-1965; y2<-2024
+# dt1965_2024<-.$mean[.$year==y2]-.$mean[.$year==y1]
+# paste("黒部ダム月平均気温は1965-2024間に", (dt1965_2024)/(y2-y1)*10,"℃/10年上昇た")
+# 
+# y1<-1965; y2<-2004
+# dt1965_2004<-.$mean[.$year==y2]-.$mean[.$year==y1]
+# paste("黒部ダム月平均気温は1965-2004間に", (dt1965_2024)/(y2-y1)*10,"℃/10年上昇た")
+
 
 ```
 
@@ -115,11 +131,26 @@ res2$pairwise
 
 ```{r}
 
-Fig_yr_ba_Kaminoko_JVS2()
+# Fig_yr_ba_Kaminoko_JVS2()
+# res3 <- statistics_cor_wi_ba_EcotonePlot(s)
 
+res<-Fig_wi_ba_cor_ancova_JVS2()
+res
 
-res3 <- statistics_cor_wi_ba_EcotonePlot(s)
+```
 
+```{r}
+# d<-TemperatureWIAbiesPopulation
+# wi.<-subset(d,plot=="Kaminokodaira")$WI
+# par(mfrow = c(2, 3))
+# 
+# d2<-.data_Fig_yr_ba_kaminokodaira_zone_2024
+# ba_wi_plot3(wi.,d2)
+# 
+# d2<-.data_Fig_yr_ba_kaminokodaira_Cryptomeria_Fagus_Abies_2024
+# ba_wi_plot3(wi.,d2)
+# Fig_wi_ba_cor_JVS2()
+ 
 ```
 
 ## ANCOVA: BA比 ~ WI * 樹種/zone
@@ -128,9 +159,28 @@ res3 <- statistics_cor_wi_ba_EcotonePlot(s)
 res4 <- statistics_ANCOVA_wi_ba_EcotonePlot(s)
 res4$by_species$slopes
 ```
-## Table_TemperatureWIAbiesPopulation_cor()
+## 気温因子(Tmax,Tmin,Tmean,WI)とオオシラビソ個体群動態(Condit G,M,I)との相関
 ```{r}
-Table_TemperatureWIAbiesPopulation_cor()
+TemperatureWIAbiesPopulation
+
+
+tbl <- Table_TemperatureWIAbiesPopulation_cor()
+
+knitr::kable(tbl) |>
+  kableExtra::kable_styling(
+    bootstrap_options = c("striped", "condensed"),
+    font_size = 11,
+    full_width = TRUE
+  ) |>
+  kableExtra::scroll_box(width = "100%")
+
+```
+
+
+```{r}
+
+Fig_Abies_wi_ba_mortality()
+
 ```
 
 <!-- ここは出力されない保留テキスト

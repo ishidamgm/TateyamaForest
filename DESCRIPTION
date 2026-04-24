@@ -11,7 +11,9 @@ Depends:
     shapefiles,
     ggrepel,
     stringi,
-    Kendall
+    Kendall,
+    ggplot2,
+    patchwork
 Suggests: 
     testthat,
     knitr,
@@ -19,4 +21,5 @@ Suggests:
 VignetteBuilder: knitr
 Encoding: UTF-8
 LazyData: true
+URL: https://github.com/ishidamgm/TateyamaForest
 RoxygenNote: 7.3.3

@@ -16,6 +16,7 @@ list（by_species, by_zone）各list（model, slopes, pairwise）
 4. ANCOVA: BA比 ~ WI * 樹種/zone（傾きのペアワイズ比較）
 }
 \examples{
+# old
  s <- new_statistics(
 wi_year          = wi_year,
 Abies_death_ratio = Abies_death_ratio,
@@ -24,4 +25,6 @@ f2_raw           = .data_Fig_yr_ba_kaminokodaira_zone_2024
 )
 (res<-statistics_ANCOVA_wi_ba_EcotonePlot(s))
 str(res)
+
+#
 }

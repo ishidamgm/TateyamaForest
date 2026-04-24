@@ -9,7 +9,10 @@
 出力: Table6_updated.csv
 ============================================================}
 \usage{
-Table_TemperatureWIAbiesPopulation_cor()
+Table_TemperatureWIAbiesPopulation_cor(p_values = TRUE)
+}
+\arguments{
+\item{p_values}{}
 }
 \value{
 data frame for arranged table
@@ -26,5 +29,13 @@ Table. Pearson correlation coefficients
 tbl<-Table_TemperatureWIAbiesPopulation_cor()
 tbl
 #write.csv(tbl, "Table_TemperatureWIAbiesPopulation_cor.csv", row.names = FALSE)
+
+ Pearson correlation coefficients between Climate factors and  Cumulative Mortarity of A.mariesii
+
+ population ratio (Condit et al.)
+
+
+Table_TemperatureWIAbiesPopulation_cor()
+
 
 }

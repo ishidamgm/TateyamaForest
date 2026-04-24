@@ -785,14 +785,14 @@ Fig_year_WI_3<-function(){
   legend_no <- match(intact_plot,leg$n)
   par(mgp=c(2.5, 1, 0))
   plot(0,type="n",xlab="Year", ylab="Warmth Index (degrees Celsius*month)",
-       xlim=c(1960,2025),ylim=c(8,80),cex.lab=1.1,cex.axis=1.1)
+       xlim=c(1960,2025),ylim=c(8,87),cex.lab=1.1,cex.axis=1.1)
 
   text(1960,72,"Temperate zone",cex=1.2, adj = 0, font = 3,  col = "grey60")
   text(1960,47,"Ecotone",cex=1.2, adj = 0, font = 3,  col = "grey60")
   text(1960,33,"Subarctic zone",,cex=1.2, adj = 0, font = 3,  col = "grey60")
 
 
-  abline(h=c(45,55),lty=2,lwd=3,col="red")
+  abline(h=c(15,45,55,85),lty=2,lwd=3,col="red")
   wi.<-wi_year #WI_with_KurodeDamObservation
   for (i in 1:length(plot_no)){
     lines(wi.$year,wi.[,plot_no[i]],type="l",lty=i, lwd=2,#pch=i,
