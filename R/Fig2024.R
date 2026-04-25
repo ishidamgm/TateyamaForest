@@ -2,6 +2,7 @@
 
 # RData ####
 #' Species basal area for each plot
+#'  /total basal area
 #'
 #' save as "sp_ba.RData"
 #'
@@ -23,6 +24,9 @@
 #'# save(sp_ba_ratio,file="data/sp_ba_ratio.RData")
 #'# save(sp_ba_ratio_StandigDead,file="data/sp_ba_ratio_StandigDead.RData")
 #'
+#'
+#'x<-sp_ba$Kaminokodaira
+#'t(t(x)/rowSums(t(x)))
 #'
 
 yr_sp_ba_site <-function(cond=substitute(f.>0)){
@@ -399,8 +403,8 @@ Fig_wi_ba_cor_ancova_JVS2 <- function(clim_var = "WI") {
                   color = "black", linewidth = 0.7) +
       labs(title    = label_main,
            subtitle = sub_lab,
-           x        = sprintf("%s (interval mean)", clim_var),
-           y        = "BA ratio (midpoint)") +
+           x        = sprintf("%s ", clim_var),
+           y        = "BA ratio (proportional)") +
       theme_classic(base_size = 11) +
       theme(
         plot.title    = element_text(face = "italic", hjust = 0.5, size = 12),
@@ -600,7 +604,7 @@ Fig_Abies_wi_ba_mortality<-function(){
     geom_line(linetype = "dashed") +
     geom_smooth(method = "lm", se = FALSE, linewidth = 0.7) +
     scale_color_manual(values = col_vals) +
-    labs(x = "WI", y = "Basal area ratio") +
+    labs(x = "WI", y = "Basal area(BA) ratio") +
     coord_cartesian(xlim = c(20, 57), ylim = c(0.78, 1.30)) +
     # plot名（bold）
     geom_text(data = reg_ba,
@@ -855,6 +859,24 @@ sp_dominant_ba_ratio_calc <- function(){
 }
 
 # Abies ####
+
+#' Distributions of the diameter at breast height of A. mariesii during the first survey (2000) in each plot.
+#'
+#' @returns
+#' @export
+#'
+#' @examples
+#' Fig_Abies_DBH_hist_JVS2()
+#'
+Fig_Abies_DBH_hist_JVS2 <- function(){
+  par(mfrow=c(1,3))
+  dbh_hist_term1to7(plotname="Kaminokodaira",main="Ecotone plot",species="オオシラビソ",legend=F)
+  dbh_hist_term1to7(plotname="Matsuotoge",main="Subarctic plot",species="オオシラビソ",legend=F)
+  dbh_hist_term1to7(plotname="Kagamiishi",main="Timberline plot",species="オオシラビソ",legend=F,breaks=seq(0,30,5))
+  legend(1.5,53,legend=c("Dead Standing (fallen)","Dead Standing(not fallen)","Living"),
+   fill=c("black","black","white"),density=c(NA,20,NA))
+
+}
 
 #' histgram of dbh including dead standing trees
 #' in 2000 (term 1) at Kaminokodaira

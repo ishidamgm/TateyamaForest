@@ -574,6 +574,7 @@ Abies_mortality_ratio_midpoint<-function(){
 #'
 #' @examples
 #' Abies_ba_ratio_midpoint()
+#'
 Abies_ba_ratio_midpoint<-function(){
   .<-sp_ba
   sp.<- "オオシラビソ"

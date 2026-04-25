@@ -2,7 +2,8 @@
 % Please edit documentation in R/Fig2024.R
 \name{yr_sp_ba_site}
 \alias{yr_sp_ba_site}
-\title{Species basal area for each plot}
+\title{Species basal area for each plot
+ /total basal area}
 \usage{
 yr_sp_ba_site(cond = substitute(f. > 0))
 }
@@ -28,5 +29,8 @@ save as "sp_ba.RData"
 # save(sp_ba_ratio,file="data/sp_ba_ratio.RData")
 # save(sp_ba_ratio_StandigDead,file="data/sp_ba_ratio_StandigDead.RData")
 
+
+x<-sp_ba$Kaminokodaira
+t(t(x)/rowSums(t(x)))
 
 }

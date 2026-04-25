@@ -4,7 +4,9 @@ title: "黒部ダム観測値の修正に伴う図表変更"
 output:
   html_document:
     toc: true
-    toc_float: true
+    toc_float:
+      collapsed: false
+      smooth_scroll: true
     toc_depth: 4
     df_print: paged
 ---
@@ -86,12 +88,12 @@ ratio_wi55up<-100*sum(wi.>55)/length(wi.)
 
 
 
-# 統計再計算
 
 
 
 
-## オブジェクト生成
+
+# オブジェクト生成
 
 ```{r}
   # オブジェクト生成
@@ -107,30 +109,12 @@ ratio_wi55up<-100*sum(wi.>55)/length(wi.)
 
 
 
-## Pearson相関: WI vs. 累積死亡率
 
-```{r}
-
-
-Fig_Abies_death_ratio()
-
-res1 <- statistics_cor_WI_AbiesCumulativeMortality(s)
-res1
-```
-
-## ANCOVA: 累積死亡率 ~ year * plot
-
-```{r}
-
-
-res2 <- statistics_ANCOVA_Abies_CumulativeDeathRatio_year_plot(s)
-res2$pairwise
-```
 
 ## Pearson相関: WI vs. BA比
 
 ```{r}
-
+Fig_yr_ba_Kaminoko_JVS2()
 # Fig_yr_ba_Kaminoko_JVS2()
 # res3 <- statistics_cor_wi_ba_EcotonePlot(s)
 
@@ -159,6 +143,38 @@ res
 res4 <- statistics_ANCOVA_wi_ba_EcotonePlot(s)
 res4$by_species$slopes
 ```
+
+## Pearson相関: WI vs. 累積死亡率
+
+```{r}
+
+
+Fig_Abies_death_ratio()
+
+res1 <- statistics_cor_WI_AbiesCumulativeMortality(s)
+res1
+```
+
+## ANCOVA: 累積死亡率 ~ year * plot
+
+```{r}
+
+
+res2 <- statistics_ANCOVA_Abies_CumulativeDeathRatio_year_plot(s)
+res2$pairwise
+```
+
+```{r}
+
+Fig_Abies_wi_ba_mortality()
+
+
+
+```
+
+先のEcoto　plotにおけるオオシラビソのBa　ratioはプロット全体のtotal BAに対しての変化(Fig_wi_ba_cor_ancova_JVS2)，この図のBa　ratioはオオシラビソに限ったBAの変化(BAi/BA1)，回帰パラメーターが若干異なる
+
+# Appendix
 ## 気温因子(Tmax,Tmin,Tmean,WI)とオオシラビソ個体群動態(Condit G,M,I)との相関
 ```{r}
 TemperatureWIAbiesPopulation
@@ -177,11 +193,6 @@ knitr::kable(tbl) |>
 ```
 
 
-```{r}
-
-Fig_Abies_wi_ba_mortality()
-
-```
 
 <!-- ここは出力されない保留テキスト
 -------------

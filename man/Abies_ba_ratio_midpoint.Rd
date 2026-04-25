@@ -11,4 +11,5 @@ Abies_ba_ratio_midpoint
 }
 \examples{
 Abies_ba_ratio_midpoint()
+
 }

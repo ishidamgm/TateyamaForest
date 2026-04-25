@@ -1,4 +1,4 @@
-#' Fig_wi_ba_cor_ancova_EcotonePlot_JVS2
+#' Fig_wi_ba_cor_ancova_JVS2
 #'
 #' @param clim_var
 #'
@@ -7,13 +7,13 @@
 #'
 #' @examples
 #'
-#' res<-Fig_wi_ba_cor_ancova_EcotonePlot_JVS2()
+#' res<-Fig_wi_ba_cor_ancova_JVS2()
 #' res
-Fig_wi_ba_cor_ancova_EcotonePlot_JVS2 <- function() {
-  . <- subset(TemperatureWIAbies_Population_BA_Mortality, plot == "Kaminokodaira")
-  wi    <-.$WI
-  ba    <- .$BAratio
-  mo    <- .$mortality
+Fig_wi_ba_cor_ancova_JVS2 <- function(clim_var = "WI") {
+  d_clim <- subset(TemperatureWIAbiesPopulation, plot == "Kaminokodaira")
+  wi.    <- d_clim[[clim_var]]
+  dz     <- .data_Fig_yr_ba_kaminokodaira_zone_2024
+  dsp    <- .data_Fig_yr_ba_kaminokodaira_Cryptomeria_Fagus_Abies_2024
 
   group_list <- unique(dz$sp)
   sp_list    <- unique(dsp$sp)
