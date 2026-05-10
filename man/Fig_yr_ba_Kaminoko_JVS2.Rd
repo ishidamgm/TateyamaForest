@@ -2,13 +2,14 @@
 % Please edit documentation in R/Fig2024.R
 \name{Fig_yr_ba_Kaminoko_JVS2}
 \alias{Fig_yr_ba_Kaminoko_JVS2}
-\title{Title}
+\title{ANCOVA for slope of regression lines for WI and Basal area at the Ecotone plot}
 \usage{
 Fig_yr_ba_Kaminoko_JVS2()
 }
 \description{
-Title
+ANCOVA for slope of regression lines for WI and Basal area at the Ecotone plot
 }
 \examples{
 Fig_yr_ba_Kaminoko_JVS2()
+
 }

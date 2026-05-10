@@ -163,7 +163,7 @@ Fig_yr_ba_site2_zone <-function(){
   BA <- yr_ba_site()
   plot(0,type="n" , #lty=ii,pch=ii,col=ii,
        xlim=c(1998,2025) , ylim=c(0.97,1.23),
-       xlab="Year",ylab="Ratio of total basal area")
+       xlab="Year",ylab="Ratio of total basal area") #Ratio of total basal area
   abline(h=1)
   n<-match(plt2$na,names(BA))
   for (ii in n){
@@ -186,6 +186,7 @@ Fig_yr_ba_site2_zone <-function(){
 #'
 #' @examples
 #' Fig_yr_ba_kaminokodaira_Fagus_Abies_2024()
+#'
 Fig_yr_ba_kaminokodaira_Fagus_Abies_2024 <- function(){
   .<-sp_ba_ratio
   plot. <- "Kaminokodaira"
@@ -224,7 +225,8 @@ Fig_yr_ba_kaminokodaira_Cryptomeria_Fagus_Abies_2024 <- function(){
   rba.sp1 <-bar.[sp.1,]/bar.[sp.1,1]   #relative basal area
   rba.sp2 <- bar.[sp.2,]/bar.[sp.2,1]    #relative basal area
   rba.sp3 <- bar.[sp.3,]/bar.[sp.3,1]    #relative basal area
-  plot(Year,rba.sp1,ylab="Ratio of total basal area", ylim=c(.4,1.8),
+  plot(Year,rba.sp1,ylab="BA ratio (stand-based)", #"Ratio of total basal area",
+       ylim=c(.4,1.8),
        type="b",lwd=3,pch=2,col="blue",cex=1.2,cex.lab=1.2,
        #main="In the Ecotone Plot"
        )
@@ -269,7 +271,8 @@ Fig_yr_ba_kaminokodaira_zone_2024 <- function(){
   rba.Subarctic <- bar..[bar..$zone.=="Subarctic",-1]/bar..[bar..$zone.=="Subarctic",2]   #relative basal area
 
 
-  plot(Year,rba.Subarctic,ylab="Ratio of total basal area", ylim=c(0.5,1.1),
+  plot(Year,rba.Subarctic,ylab="BA ratio (stand-based)", #Ratio of total basal area
+       ylim=c(0.5,1.1),
        type="b",lwd=2,pch=17,col="skyblue",
        cex=1.2,cex.lab=1.2,
        #, main="In the Ecotone Plot"
@@ -290,13 +293,14 @@ Fig_yr_ba_kaminokodaira_zone_2024 <- function(){
 
 
 
-#' Title
+#' ANCOVA for slope of regression lines for WI and Basal area at the Ecotone plot
 #'
 #' @returns
 #' @export
 #'
 #' @examples
 #' Fig_yr_ba_Kaminoko_JVS2()
+#'
 Fig_yr_ba_Kaminoko_JVS2<-function(){
   old_par <- par(no.readonly = TRUE)
 
@@ -307,11 +311,6 @@ Fig_yr_ba_Kaminoko_JVS2<-function(){
   mtext("(b)", side = 3, adj = 0, line = 0.5, cex = 1.2, font = 2)
   par(old_par)
 }
-
-
-
-
-
 #' Fig_wi_ba_cor_ancova_JVS2
 #'
 #' @param clim_var
@@ -320,32 +319,19 @@ Fig_yr_ba_Kaminoko_JVS2<-function(){
 #' @export
 #'
 #' @examples
-#'
 #' res<-Fig_wi_ba_cor_ancova_JVS2()
 #' res
-Fig_wi_ba_cor_ancova_JVS2 <- function(clim_var = "WI") {
-  d_clim <- subset(TemperatureWIAbiesPopulation, plot == "Kaminokodaira")
-  wi.    <- d_clim[[clim_var]]
-  dz     <- .data_Fig_yr_ba_kaminokodaira_zone_2024
-  dsp    <- .data_Fig_yr_ba_kaminokodaira_Cryptomeria_Fagus_Abies_2024
+Fig_wi_ba_cor_ancova_JVS2 <- function( clim_var="WI") {
+
+
+  dz    <- data_Fig_yr_ba_kaminokodaira_zone_2024
+  dsp <- data_Fig_yr_ba_kaminokodaira_Cryptomeria_Fagus_Abies_2024
+
+
 
   group_list <- unique(dz$sp)
   sp_list    <- unique(dsp$sp)
-
-  # 区間中点データ生成
-  to_interval <- function(df) {
-    sp_list_ <- unique(as.character(df$sp))
-    do.call(rbind, lapply(sp_list_, function(s) {
-      d.     <- subset(df, as.character(sp) == s)
-      ba.    <- d.$ba_ratio
-      ba_mid <- (ba.[-length(ba.)] + ba.[-1]) / 2
-      data.frame(sp = s, WI = wi., ba_ratio = ba_mid,
-                 stringsAsFactors = FALSE)
-    }))
-  }
-
-  f_zone    <- to_interval(dz)
-  f_species <- to_interval(dsp)
+  wi.    <- subset(dz,sp==group_list[1])$WI
 
   # ANCOVA：slopesとpairwise結果をデータフレームで返す
   run_ancova <- function(data, label) {
@@ -372,8 +358,8 @@ Fig_wi_ba_cor_ancova_JVS2 <- function(clim_var = "WI") {
     list(slopes = slopes_df, pairwise = pw_df)
   }
 
-  res_zone    <- run_ancova(f_zone,    "By zone")
-  res_species <- run_ancova(f_species, "By species")
+  res_zone    <- run_ancova(dz,    "By zone")
+  res_species <- run_ancova(dsp, "By species")
 
   slopes_all   <- rbind(res_zone$slopes,   res_species$slopes)
   pairwise_all <- rbind(res_zone$pairwise, res_species$pairwise)
@@ -381,8 +367,8 @@ Fig_wi_ba_cor_ancova_JVS2 <- function(clim_var = "WI") {
   # 作図
   make_plot <- function(data_sub, x_vec, label_main) {
     ba.    <- data_sub$ba_ratio
-    ba_mid <- (ba.[-length(ba.)] + ba.[-1]) / 2
-    df     <- data.frame(wi = x_vec, ba = ba_mid)
+    #ba_mid <- (ba.[-length(ba.)] + ba.[-1]) / 2
+    df     <- data.frame(wi = x_vec, ba = ba.)
     res    <- lm(ba ~ wi, data = df)
     cf     <- coef(res)
     sm     <- summary(res)
@@ -404,7 +390,7 @@ Fig_wi_ba_cor_ancova_JVS2 <- function(clim_var = "WI") {
       labs(title    = label_main,
            subtitle = sub_lab,
            x        = sprintf("%s ", clim_var),
-           y        = "BA ratio (proportional)") +
+           y        = "BA ratio (stand-based)") +
       theme_classic(base_size = 11) +
       theme(
         plot.title    = element_text(face = "italic", hjust = 0.5, size = 12),
@@ -414,10 +400,11 @@ Fig_wi_ba_cor_ancova_JVS2 <- function(clim_var = "WI") {
       )
   }
 
+
   plots_a <- lapply(1:3, function(i)
     make_plot(subset(dz,  sp == group_list[i]), wi., as.character(group_list[i])))
   plots_b <- lapply(1:3, function(i)
-    make_plot(subset(dsp, sp == sp_list[i]),    wi., as.character(sp_list[i])))
+    make_plot(subset(dsp, sp == sp_list[i]),   wi., as.character(sp_list[i])))
 
   fig <- wrap_plots(plots_a, nrow = 1) /
     wrap_plots(plots_b, nrow = 1) +
@@ -432,6 +419,10 @@ Fig_wi_ba_cor_ancova_JVS2 <- function(clim_var = "WI") {
   ))
 }
 
+
+
+
+
 #' Fig_Abies_wi_ba_mortality
 #'
 #' @returns
@@ -441,7 +432,7 @@ Fig_wi_ba_cor_ancova_JVS2 <- function(clim_var = "WI") {
 #' res<-Fig_Abies_wi_ba_mortality()
 #' res
 Fig_Abies_wi_ba_mortality<-function(){
-  . <- TemperatureWIAbies_Population_BA_Mortality
+  . <- Abies
   plot. <- c("Kagamiishi", "Matsuotoge","Kaminokodaira" )
   plot_labels <- c( "Timberline plot", "Subarctic plot","Ecotone plot")
   .$plot <- factor(.$plot, levels = plot., labels = plot_labels)
@@ -513,24 +504,7 @@ Fig_Abies_wi_ba_mortality<-function(){
 
 
   # 回帰統計＋plot名を計算する関数 ####
-  # get_reg_labels <- function(var) {
-  #   do.call(rbind, lapply(levels(.$plot), function(pl) {
-  #     d.    <- subset(., plot == pl)
-  #     res   <- lm(d.[[var]] ~ d.$WI)
-  #     cf    <- coef(res)
-  #     sm    <- summary(res)
-  #     r_val <- sqrt(sm$r.squared) * sign(cf[2])
-  #     p_val <- sm$coefficients[2, 4]
-  #     p_lab <- ifelse(p_val < 0.001, "p<0.001",
-  #                     sprintf("p=%.3f", p_val))
-  #     data.frame(
-  #       plot      = pl,
-  #       reg_label = sprintf("y=%.3fx%+.3f, r=%.3f, %s",
-  #                           cf[2], cf[1], r_val, p_lab),
-  #       stringsAsFactors = FALSE
-  #     )
-  #   }))
-  # }
+
   get_reg_labels <- function(var) {
     do.call(rbind, lapply(levels(.$plot), function(pl) {
       d.    <- subset(., plot == pl)
@@ -553,18 +527,7 @@ Fig_Abies_wi_ba_mortality<-function(){
   reg_mt <- get_reg_labels("mortality")
 
   # 位置情報（plot名＋回帰式の中央x）####
-  pos_ba <- data.frame(
-    plot      = levels(.$plot),
-    x         = c(25.5, 38.5, 53.0),
-    y_name    = c(1.25, 1.08, 1.04)+0.013,  # plot名のy
-    y_reg     = c(1.22, 1.05, 1.01)+0.013   # 回帰式のy
-  )
-  pos_mt <- data.frame(
-    plot      = levels(.$plot),
-    x         = c(25.5, 38.5, 53.5),
-    y_name    = c(0.17, 0.19, 0.40)+0.013,
-    y_reg     = c(0.14, 0.16, 0.37)+0.013
-  )
+
 
 
   theme_jvs <- theme_classic(base_size = 11) +
@@ -580,17 +543,18 @@ Fig_Abies_wi_ba_mortality<-function(){
   reg_mt <- get_reg_labels("mortality")
 
   # 2. 位置情報の定義
+
   pos_ba <- data.frame(
     plot   = levels(.$plot),
-    x      = c(25.5, 38.5, 53.0),
+    x      = c(28, 38.5, 58.0),
     y_name = c(1.25, 1.12, 1.08),
     y_reg  = c(1.21, 1.08, 1.04)
   )
   pos_mt <- data.frame(
     plot   = levels(.$plot),
-    x      = c(25.5, 38.5, 53.5),
-    y_name = c(0.20, 0.22, 0.44),
-    y_reg  = c(0.16, 0.18, 0.40)
+    x      = c(27, 38.5, 56.0),
+    y_name = c(0.35, 0.26, 0.22),
+    y_reg  = c(0.31, 0.22, 0.18)
   )
 
   # 3. mergeで位置情報を結合
@@ -604,8 +568,8 @@ Fig_Abies_wi_ba_mortality<-function(){
     geom_line(linetype = "dashed") +
     geom_smooth(method = "lm", se = FALSE, linewidth = 0.7) +
     scale_color_manual(values = col_vals) +
-    labs(x = "WI", y = "Basal area(BA) ratio") +
-    coord_cartesian(xlim = c(20, 57), ylim = c(0.78, 1.30)) +
+    labs(x = "WI", y = "BA ratio ((species-based)") +
+    coord_cartesian(xlim = c(22, 65), ylim = c(0.6, 1.30)) +
     # plot名（bold）
     geom_text(data = reg_ba,
               aes(x = x, y = y_name, label = plot, color = plot),
@@ -624,9 +588,9 @@ Fig_Abies_wi_ba_mortality<-function(){
 
   # p_mt Mortality の作図 ####
   ## 星取り表をgeom_text用data.frameに変換 ####
-  lvs_short <- c("Eco", "Sub", "Tim")
+  lvs_short <- c( "Tim", "Sub","Eco")
 
-  x_pos <- seq(25,32,length=3)#c(22.5, 24.5, 26.5)
+  x_pos <- seq(40,48,length=3)#c(22.5, 24.5, 26.5)
   y_pos <- seq(0.43,0.35,length=3)#c(1.18, 1.14, 1.10)
 
   mat_df <- data.frame(
@@ -642,7 +606,7 @@ Fig_Abies_wi_ba_mortality<-function(){
     geom_smooth(method = "lm", se = FALSE, linewidth = 0.7) +
     scale_color_manual(values = col_vals) +
     labs(x = "WI", y = "Cumulative Mortality ratio") +
-    coord_cartesian(xlim = c(20, 57), ylim = c(0, 0.55)) +
+    coord_cartesian(xlim = c(22, 65), ylim = c(-.03, 0.55)) +
     # plot名（bold）####
   geom_text(data = reg_mt,
             aes(x = x, y = y_name, label = plot, color = plot),
@@ -659,15 +623,18 @@ Fig_Abies_wi_ba_mortality<-function(){
 
   annotate("text", x = x_pos, y = 0.46,
            label = lvs_short, size = 2.5, fontface = "bold") +
-    annotate("text", x = 23.0, y = y_pos,
+    annotate("text", x = 38, y = y_pos,
              label = lvs_short, size = 2.5, fontface = "bold") +
     geom_text(data = mat_df, aes(x = x, y = y, label = label),
               inherit.aes = FALSE, size = 2.8, family = "mono") +
-    annotate("text", x = 23.0, y = 0.55,
+    annotate("text", x =38.0, y = 0.55,
              label = "Slope comparisons by ANCOVA (P values)\nupper: BA  lower: Mortality",
              hjust = 0, vjust = 1, size = 2.2, color = "grey40") +
+    annotate("rect", xmin =37, xmax = 50, ymin = 0.33, ymax = 0.48,col="black",fill = NA)+
     theme_jvs +
     theme(legend.position = "none")  # 凡例を削除
+
+
 
   suppressMessages(
     print(
@@ -678,6 +645,9 @@ Fig_Abies_wi_ba_mortality<-function(){
 
   invisible(list( regression_ba=reg_ba,regression_mortality=reg_mt,BAratio_ancova=BAratio_ancova,mortality_ancova=mortality_ancova))
 }
+
+
+
 
 
 #' Draw simple pi chart

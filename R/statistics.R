@@ -79,18 +79,22 @@ run_pairwise <- function(data, response, covariate, groupvar) {
 #' @export
 #'
 #' @examples
-#' s <- new_statistics(wi_year, Abies_death_ratio,
-#'                     .data_Fig_yr_ba_kaminokodaira_Cryptomeria_Fagus_Abies_2024,
-#'                     .data_Fig_yr_ba_kaminokodaira_zone_2024)
+#' f1_raw <- data_Fig_yr_ba_kaminokodaira_Cryptomeria_Fagus_Abies_2024
+#' f2_raw <- data_Fig_yr_ba_kaminokodaira_zone_2024
+#' s <- new_statistics(wi_year, Abies_death_ratio,f1_raw, f2_raw)
 #' s
+#' str(s)
+#'
 new_statistics <- function(wi_year, Abies_death_ratio, f1_raw, f2_raw) {
 
   ## Kaminokodaira 調査年のWI
-  kami_years <- sort(unique(f1_raw$year))
-  wi_kami    <- data.frame(
-    year = kami_years,
-    WI   = wi_year[match(kami_years, wi_year$year), "Kaminokodaira"]
-  )
+  # kami_years <- sort(unique(f1_raw$year))
+  # wi_kami    <- data.frame(
+  #   year = kami_years,
+  #   WI   = wi_year[match(kami_years, wi_year$year), "Kaminokodaira"]
+  # )
+
+  wi_kami <- subset(f1_raw,sp=="Abies mariesii")
 
   ## 樹種別・zone別BAにWIを結合
   f1      <- f1_raw
@@ -140,6 +144,7 @@ print.statistics <- function(x, ...) {
               paste(levels(x$death_data$plot), collapse = ", ")))
   cat(sprintf("BA (species): n = %d\n", nrow(x$f1)))
   cat(sprintf("BA (zone)   : n = %d\n", nrow(x$f2)))
+  str(x)
   invisible(x)
 }
 
@@ -278,8 +283,8 @@ statistics_cor_wi_ba_EcotonePlot <- function(s) {
 #'  s <- new_statistics(
 #' wi_year          = wi_year,
 #' Abies_death_ratio = Abies_death_ratio,
-#' f1_raw           = .data_Fig_yr_ba_kaminokodaira_Cryptomeria_Fagus_Abies_2024,
-#' f2_raw           = .data_Fig_yr_ba_kaminokodaira_zone_2024
+#' f1_raw          = data_Fig_yr_ba_kaminokodaira_Cryptomeria_Fagus_Abies_2024,
+#' f2_raw         = data_Fig_yr_ba_kaminokodaira_zone_2024
 #' )
 #' (res<-statistics_ANCOVA_wi_ba_EcotonePlot(s))
 #' str(res)
@@ -378,8 +383,8 @@ ba_wi_plot3<-function(wi.,d2){
 #   s <- new_statistics(
 #     wi_year          = wi_year,
 #     Abies_death_ratio = Abies_death_ratio,
-#     f1_raw           = .data_Fig_yr_ba_kaminokodaira_Cryptomeria_Fagus_Abies_2024,
-#     f2_raw           = .data_Fig_yr_ba_kaminokodaira_zone_2024
+#     f1_raw           = data_Fig_yr_ba_kaminokodaira_Cryptomeria_Fagus_Abies_2024,
+#     f2_raw           = data_Fig_yr_ba_kaminokodaira_zone_2024
 #   )
 #
 #   print(s)
@@ -394,7 +399,6 @@ ba_wi_plot3<-function(wi.,d2){
 #   res2$pairwise        # ペアワイズ比較表
 #   res4$by_species$slopes  # 樹種別傾き
 # }
-
 #' Table. Pearson correlation coefficients
 #'          between climate variables and demographic rates
 #'          of A. mariesii
@@ -586,5 +590,17 @@ Abies_ba_ratio_midpoint<-function(){
     rba.<-c(rba.,list((rba.sp[-1]+rba.sp[-length(rba.sp)])/2))
   }
   names(rba.)<-plot.
+
+  # .<-sp_ba_ratio
+  #  sp.<- "オオシラビソ"
+  # plot.<-c("Kaminokodaira","Matsuotoge","Kagamiishi")
+  #  rba.<-c()
+  #  for (ii in 1:length(plot.)){
+  #    bar.<-.[[plot.[ii]]]
+  #    rba.sp <-bar.[sp.,]/bar.[sp.,1]
+  #    rba.<-c(rba.,list((rba.sp[-1]+rba.sp[-length(rba.sp)])/2))
+  #  }
+  #  names(rba.)<-plot.
+
   return(rba.)
 }

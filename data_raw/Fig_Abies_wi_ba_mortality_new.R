@@ -79,24 +79,7 @@ Fig_Abies_wi_ba_mortality<-function(){
 
 
   # 回帰統計＋plot名を計算する関数 ####
-  # get_reg_labels <- function(var) {
-  #   do.call(rbind, lapply(levels(.$plot), function(pl) {
-  #     d.    <- subset(., plot == pl)
-  #     res   <- lm(d.[[var]] ~ d.$WI)
-  #     cf    <- coef(res)
-  #     sm    <- summary(res)
-  #     r_val <- sqrt(sm$r.squared) * sign(cf[2])
-  #     p_val <- sm$coefficients[2, 4]
-  #     p_lab <- ifelse(p_val < 0.001, "p<0.001",
-  #                     sprintf("p=%.3f", p_val))
-  #     data.frame(
-  #       plot      = pl,
-  #       reg_label = sprintf("y=%.3fx%+.3f, r=%.3f, %s",
-  #                           cf[2], cf[1], r_val, p_lab),
-  #       stringsAsFactors = FALSE
-  #     )
-  #   }))
-  # }
+
   get_reg_labels <- function(var) {
     do.call(rbind, lapply(levels(.$plot), function(pl) {
       d.    <- subset(., plot == pl)
@@ -119,18 +102,7 @@ Fig_Abies_wi_ba_mortality<-function(){
   reg_mt <- get_reg_labels("mortality")
 
   # 位置情報（plot名＋回帰式の中央x）####
-  pos_ba <- data.frame(
-    plot      = levels(.$plot),
-    x         = c(25.5, 38.5, 53.0),
-    y_name    = c(1.25, 1.08, 1.04)+0.013,  # plot名のy
-    y_reg     = c(1.22, 1.05, 1.01)+0.013   # 回帰式のy
-  )
-  pos_mt <- data.frame(
-    plot      = levels(.$plot),
-    x         = c(25.5, 38.5, 53.5),
-    y_name    = c(0.17, 0.19, 0.40)+0.013,
-    y_reg     = c(0.14, 0.16, 0.37)+0.013
-  )
+
 
 
   theme_jvs <- theme_classic(base_size = 11) +
@@ -146,17 +118,18 @@ Fig_Abies_wi_ba_mortality<-function(){
   reg_mt <- get_reg_labels("mortality")
 
   # 2. 位置情報の定義
+
   pos_ba <- data.frame(
     plot   = levels(.$plot),
-    x      = c(25.5, 38.5, 53.0),
+    x      = c(28, 38.5, 58.0),
     y_name = c(1.25, 1.12, 1.08),
     y_reg  = c(1.21, 1.08, 1.04)
   )
   pos_mt <- data.frame(
     plot   = levels(.$plot),
-    x      = c(25.5, 38.5, 53.5),
-    y_name = c(0.20, 0.22, 0.44),
-    y_reg  = c(0.16, 0.18, 0.40)
+    x      = c(27, 38.5, 56.0),
+    y_name = c(0.35, 0.26, 0.22),
+    y_reg  = c(0.31, 0.22, 0.18)
   )
 
   # 3. mergeで位置情報を結合
@@ -171,7 +144,7 @@ Fig_Abies_wi_ba_mortality<-function(){
     geom_smooth(method = "lm", se = FALSE, linewidth = 0.7) +
     scale_color_manual(values = col_vals) +
     labs(x = "WI", y = "BA ratio ((species-based)") +
-    coord_cartesian(xlim = c(22, 65), ylim = c(0.78, 1.30)) +
+    coord_cartesian(xlim = c(22, 65), ylim = c(0.6, 1.30)) +
     # plot名（bold）
     geom_text(data = reg_ba,
               aes(x = x, y = y_name, label = plot, color = plot),
@@ -192,7 +165,7 @@ Fig_Abies_wi_ba_mortality<-function(){
   ## 星取り表をgeom_text用data.frameに変換 ####
   lvs_short <- c( "Tim", "Sub","Eco")
 
-  x_pos <- seq(25,32,length=3)#c(22.5, 24.5, 26.5)
+  x_pos <- seq(40,48,length=3)#c(22.5, 24.5, 26.5)
   y_pos <- seq(0.43,0.35,length=3)#c(1.18, 1.14, 1.10)
 
   mat_df <- data.frame(
@@ -208,7 +181,7 @@ Fig_Abies_wi_ba_mortality<-function(){
     geom_smooth(method = "lm", se = FALSE, linewidth = 0.7) +
     scale_color_manual(values = col_vals) +
     labs(x = "WI", y = "Cumulative Mortality ratio") +
-    coord_cartesian(xlim = c(22, 65), ylim = c(0, 0.55)) +
+    coord_cartesian(xlim = c(22, 65), ylim = c(-.03, 0.55)) +
     # plot名（bold）####
   geom_text(data = reg_mt,
             aes(x = x, y = y_name, label = plot, color = plot),
@@ -225,15 +198,18 @@ Fig_Abies_wi_ba_mortality<-function(){
 
   annotate("text", x = x_pos, y = 0.46,
            label = lvs_short, size = 2.5, fontface = "bold") +
-    annotate("text", x = 23.0, y = y_pos,
+    annotate("text", x = 38, y = y_pos,
              label = lvs_short, size = 2.5, fontface = "bold") +
     geom_text(data = mat_df, aes(x = x, y = y, label = label),
               inherit.aes = FALSE, size = 2.8, family = "mono") +
-    annotate("text", x = 23.0, y = 0.55,
+    annotate("text", x =38.0, y = 0.55,
              label = "Slope comparisons by ANCOVA (P values)\nupper: BA  lower: Mortality",
              hjust = 0, vjust = 1, size = 2.2, color = "grey40") +
+    annotate("rect", xmin =37, xmax = 50, ymin = 0.33, ymax = 0.48,col="black",fill = NA)+
     theme_jvs +
     theme(legend.position = "none")  # 凡例を削除
+
+
 
   suppressMessages(
     print(

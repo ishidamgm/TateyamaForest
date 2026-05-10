@@ -13,7 +13,6 @@ Fig_wi_ba_cor_ancova_JVS2(clim_var = "WI")
 Fig_wi_ba_cor_ancova_JVS2
 }
 \examples{
-
 res<-Fig_wi_ba_cor_ancova_JVS2()
 res
 }

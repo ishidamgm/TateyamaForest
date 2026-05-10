@@ -1,0 +1,151 @@
+---
+title: "Fig.6_7_11 ancova元データの検討"
+output:
+  html_document:
+    toc: true
+    toc_float:
+      collapsed: false
+      smooth_scroll: true
+    toc_depth: 4
+    df_print: paged
+---
+
+```{r, message = FALSE, warning = FALSE}
+library(package="TateyamaForest")
+library(kableExtra)
+library(ggplot2)
+library(patchwork)
+#help(package="TateyamaForest")
+#data(package="TateyamaForest")
+
+```
+# 基礎データ
+```{r}
+# Basal area
+sp_ba
+
+# propotional Basal area ratio (relative to stand)
+
+sp_ba_ratio
+```
+
+
+
+#　Fig.6_7_11 ancova元データの検討 ####
+
+# FIGURE 6 | Changes in basal area in the Ecotone plot over time. ####
+
+```{r}
+Fig_yr_ba_kaminokodaira_zone_2024()
+Fig_yr_ba_kaminokodaira_Cryptomeria_Fagus_Abies_2024()
+Fig_yr_ba_Kaminoko_JVS2()
+
+##　生データ ####
+
+sp_ba[["Kaminokodaira"]]["オオシラビソ",]　
+##　対林分 ####
+sp_ba[["Kaminokodaira"]]["オオシラビソ",]/colSums( sp_ba[["Kaminokodaira"]])
+# 2000       2004       2007       2010       2013       2018       2024 
+# 0.04941790 0.04757411 0.04181103 0.04173711 0.04184712 0.03898118 0.02600110 
+#　sp_ba_ratioは　対林分 ####
+(A<-sp_ba_ratio[["Kaminokodaira"]]["オオシラビソ",])
+# 2000       2004       2007       2010       2013       2018       2024 
+# 0.04941790 0.04757411 0.04181103 0.04173711 0.04184712 0.03898118 0.02600110 
+## 初期値1に基準化 ####
+A/A[1]
+# 2000      2004      2007      2010      2013      2018      2024 
+# 1.0000000 0.9626897 0.8460705 0.8445747 0.8468009 0.7888069 0.5261474 
+
+```
+
+
+
+
+
+
+# FIGURE 7 | Relationships between the warmth index (WI) and the basal area ratio at the Ecotone plot. ####
+```{r}
+Fig_wi_ba_cor_ancova_JVS2()
+.data_Fig_yr_ba_kaminokodaira_zone_2024
+.data_Fig_yr_ba_kaminokodaira_Cryptomeria_Fagus_Abies_2024
+## Fig.6と同じ　####
+```
+
+
+
+# FIGURE 11 | Relationships between the warmth index (WI) and (a) basal area ratio and (b) cumulative mortality ratio of _Abies mariesii_ in the Timberline, Subarctic, and Ecotone plots. ####
+
+```{r}
+Fig_Abies_wi_ba_mortality()
+(.<-TemperatureWIAbies_Population_BA_Mortality)
+.$BAratio
+
+# Basal area (種内)　報告書
+a<-sp_ba$Kaminokodaira["オオシラビソ",]
+a/a[1]　　
+plot(a/a[1],type="b"　)
+
+```
+
+Fig.11はこのミッドポイントを使っている。
+
+# Fig7　WI が低いのでは
+
+```{r}
+
+#YearsIntervalAverage_plots_wi.rds　　　#　4/7　wi おかしい
+if(0){
+  yr_wi_bar #2024/10/21
+  
+  load("YearsIntervalAverage_plots_wi_data.RData")
+ d  #　wi　あっている 59.98                            4/14 9:36
+ readRDS("YearsIntervalAverage_plots_wi_data_2.rds")
+
+ .data_Fig_yr_ba_kaminokodaira_Cryptomeria_Fagus_Abies_2024　#　wi おかしい 64.87   4/14 8:23
+ 
+ YearsIntervalAverage_plots_wi_2　　#　wi おかしい 54.2   4/14 8:23
+ 
+ TemperatureWIAbies_Population_BA_Mortality　#　wi おかしい 54.26664　5/1 
+ 
+TemperatureWIAbiesPopulation　#　wi おかしい
+wi_yaer
+wi_yaer$Kaminokodaira[54:60]
+mean(wi_yaer$Kaminokodaira[54:60]) 
+}
+
+```
+
+# 気温
+```{r}
+
+#read_csv("YearsIntervalCalc_plots_temp.csv")　#多分あっている
+
+```
+
+問題はwiデータがおかしいこと。
+黒部ダムデータ更新の際に混乱した?
+今後の方針としては回帰式の値を代替させる
+interval mean は変動が大きすぎる
+回帰式でスムージングさせる
+Table
+TemperatureWIAbies_Population_BA_Mortalityをバックアップ
+名前が長すぎる
+climate_ForestDynamics.RDataのようなものを作る
+TemperatureWIAbies_Population_BA_Mortalityのwiを書き換えancova再計算
+wi_calc()
+
+```{r}
+KurobeDam_Tmean<-function(yr){
+  0.060*yr-113.5
+}
+yr<-1960:2024
+plot(yr,KurobeDam_Tmean(yr))
+```
+# 方針
+
+TemperatureWIAbies_Population_BA_Mortalityのwiを修正する
+
+
+
+
+

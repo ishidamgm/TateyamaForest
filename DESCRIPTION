@@ -1,8 +1,8 @@
 Package: TateyamaForest
 Type: Package
 Title: Forest data anarysys of Tateya vegetation monitoring
-Version: 0.0.0.20260426
-Author: Ishida M & Nakajima H
+Version: 0.0.0.20260509
+Author: Ishida M & Nakajima H  & Kume A
 Maintainer: Ishida M <ishidam@sanchikanri.co.jp>
 Description: Tateya vegetation monitoring
 License: GPL (>= 2)

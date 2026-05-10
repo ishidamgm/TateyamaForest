@@ -1,3 +1,115 @@
+#' Fig_wi_ba_cor_ancova_JVS2
+#'
+#' @param clim_var
+#'
+#' @returns
+#' @export
+#'
+#' @examples
+#' res<-Fig_wi_ba_cor_ancova_JVS2("WI")
+#' res
+Fig_wi_ba_cor_ancova_JVS2 <- function() {
+
+
+  dz    <- data_Fig_yr_ba_kaminokodaira_zone_2024
+  dsp <- data_Fig_yr_ba_kaminokodaira_Cryptomeria_Fagus_Abies_2024
+
+
+
+  group_list <- unique(dz$sp)
+  sp_list    <- unique(dsp$sp)
+  wi.    <- subset(dz,sp==group_list[1])$WI
+
+  # ANCOVA：slopesとpairwise結果をデータフレームで返す
+  run_ancova <- function(data, label) {
+    data$sp <- factor(data$sp)
+    m        <- lm(ba_ratio ~ WI * sp, data = data)
+    b        <- coef(m)
+    sp_levels <- levels(data$sp)
+
+    # slopes
+    slopes_df <- data.frame(
+      label    = label,
+      sp       = sp_levels,
+      slope    = sapply(sp_levels, function(lv) {
+        int_nm <- paste0("WI:sp", lv)
+        unname(b["WI"]) + ifelse(int_nm %in% names(b), unname(b[int_nm]), 0)
+      }),
+      stringsAsFactors = FALSE
+    )
+
+    # pairwise
+    pw_df <- run_pairwise(data, "ba_ratio", "WI", "sp")
+    pw_df$label <- label
+
+    list(slopes = slopes_df, pairwise = pw_df)
+  }
+
+  res_zone    <- run_ancova(dz,    "By zone")
+  res_species <- run_ancova(dsp, "By species")
+
+  slopes_all   <- rbind(res_zone$slopes,   res_species$slopes)
+  pairwise_all <- rbind(res_zone$pairwise, res_species$pairwise)
+
+  # 作図
+  make_plot <- function(data_sub, x_vec, label_main) {
+    ba.    <- data_sub$ba_ratio
+    #ba_mid <- (ba.[-length(ba.)] + ba.[-1]) / 2
+    df     <- data.frame(wi = x_vec, ba = ba.)
+    res    <- lm(ba ~ wi, data = df)
+    cf     <- coef(res)
+    sm     <- summary(res)
+    r_val  <- sqrt(sm$r.squared) * sign(cf[2])
+    p_val  <- sm$coefficients[2, 4]
+    #p_lab  <- ifelse(p_val < 0.001, "p < 0.001", sprintf("p = %.3f", p_val))
+    # sub_lab <- sprintf("y = %.4f x %+.4f,  r = %.3f,  %s",
+    #                    cf[2], cf[1], r_val, p_lab)
+    p_lab <- ifelse(p_val < 0.001, "p<0.001",
+                    ifelse(p_val < 0.01,  sprintf("p=%.3f", p_val),
+                           sprintf("p=%.3f", p_val)))
+    sub_lab <- sprintf("y=%.3fx%+.3f, r=%.3f, %s",
+                       cf[2], cf[1], r_val, p_lab)
+
+    ggplot(df, aes(x = wi, y = ba)) +
+      geom_point(size = 2) +
+      geom_smooth(method = "lm", se = FALSE,
+                  color = "black", linewidth = 0.7) +
+      labs(title    = label_main,
+           subtitle = sub_lab,
+           x        = sprintf("%s ", clim_var),
+           y        = "BA ratio (stand-based)") +
+      theme_classic(base_size = 11) +
+      theme(
+        plot.title    = element_text(face = "italic", hjust = 0.5, size = 12),
+        plot.subtitle = element_text(hjust = 0.5, size = 8.5),
+        axis.title    = element_text(size = 10),
+        axis.text     = element_text(size = 9)
+      )
+  }
+
+
+  plots_a <- lapply(1:3, function(i)
+    make_plot(subset(dz,  sp == group_list[i]), wi., as.character(group_list[i])))
+  plots_b <- lapply(1:3, function(i)
+    make_plot(subset(dsp, sp == sp_list[i]),   wi., as.character(sp_list[i])))
+
+  fig <- wrap_plots(plots_a, nrow = 1) /
+    wrap_plots(plots_b, nrow = 1) +
+    plot_annotation(tag_levels = list(c("(a)", "", "", "(b)", "", "")))
+
+  #print(fig)
+  suppressMessages(print(fig))
+
+  invisible(list(
+    slopes   = slopes_all,
+    pairwise = pairwise_all
+  ))
+}
+
+
+
+
+
 #' Fig_Abies_wi_ba_mortality
 #'
 #' @returns
@@ -7,7 +119,7 @@
 #' res<-Fig_Abies_wi_ba_mortality()
 #' res
 Fig_Abies_wi_ba_mortality<-function(){
-  . <- Abies
+  . <- TemperatureWIAbies_Population_BA_Mortality
   plot. <- c("Kagamiishi", "Matsuotoge","Kaminokodaira" )
   plot_labels <- c( "Timberline plot", "Subarctic plot","Ecotone plot")
   .$plot <- factor(.$plot, levels = plot., labels = plot_labels)
@@ -171,7 +283,7 @@ Fig_Abies_wi_ba_mortality<-function(){
     geom_smooth(method = "lm", se = FALSE, linewidth = 0.7) +
     scale_color_manual(values = col_vals) +
     labs(x = "WI", y = "BA ratio ((species-based)") +
-    coord_cartesian(xlim = c(22, 65), ylim = c(0.78, 1.30)) +
+    coord_cartesian(xlim = c(20, 57), ylim = c(0.78, 1.30)) +
     # plot名（bold）
     geom_text(data = reg_ba,
               aes(x = x, y = y_name, label = plot, color = plot),
@@ -208,7 +320,7 @@ Fig_Abies_wi_ba_mortality<-function(){
     geom_smooth(method = "lm", se = FALSE, linewidth = 0.7) +
     scale_color_manual(values = col_vals) +
     labs(x = "WI", y = "Cumulative Mortality ratio") +
-    coord_cartesian(xlim = c(22, 65), ylim = c(0, 0.55)) +
+    coord_cartesian(xlim = c(20, 57), ylim = c(0, 0.55)) +
     # plot名（bold）####
   geom_text(data = reg_mt,
             aes(x = x, y = y_name, label = plot, color = plot),

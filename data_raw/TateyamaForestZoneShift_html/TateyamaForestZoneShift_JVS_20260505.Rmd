@@ -93,8 +93,8 @@ dd_plot(dd)
   s <- new_statistics(
     wi_year          = wi_year,
     Abies_death_ratio = Abies_death_ratio,
-    f1_raw           = data_Fig_yr_ba_kaminokodaira_Cryptomeria_Fagus_Abies_2024,
-    f2_raw           = data_Fig_yr_ba_kaminokodaira_zone_2024
+    f1_raw           = .data_Fig_yr_ba_kaminokodaira_Cryptomeria_Fagus_Abies_2024,
+    f2_raw           = .data_Fig_yr_ba_kaminokodaira_zone_2024
   )
 
   print(s)
@@ -126,8 +126,7 @@ Fig_kurobe_dam_temperature()
 # FIGURE 4 | Changes in WI for each plot over time.
 
 ```{r}
-res<-Fig_year_WI_3()
-res
+TateyamaForest::Fig_year_WI_3()
 
 ```
 
@@ -182,8 +181,8 @@ Fig_yr_ba_Kaminoko_JVS2()
 
 # FIGURE 7 | Relationships between the warmth index (WI) and the basal area ratio at the Ecotone plot. 
 ```{r}
- # .data_Fig_yr_ba_kaminokodaira_zone_2024
- # .data_Fig_yr_ba_kaminokodaira_Cryptomeria_Fagus_Abies_2024
+ .data_Fig_yr_ba_kaminokodaira_zone_2024
+ .data_Fig_yr_ba_kaminokodaira_Cryptomeria_Fagus_Abies_2024
   
 res<-Fig_wi_ba_cor_ancova_JVS2()
 res
@@ -244,10 +243,10 @@ res2$pairwise
 # FIGURE 11 | Relationships between the warmth index (WI) and (a) basal area ratio and (b) cumulative mortality ratio of _Abies mariesii_ in the Timberline, Subarctic, and Ecotone plots. 
 
 ```{r}
-Abies
+TemperatureWIAbies_Population_BA_Mortality
+
 res <- Fig_Abies_wi_ba_mortality()
 res
-
 ```
 
 # *Supporting Information to the paper*

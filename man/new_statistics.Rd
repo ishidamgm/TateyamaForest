@@ -22,8 +22,10 @@ new_statistics(wi_year, Abies_death_ratio, f1_raw, f2_raw)
 データの前処理（WI結合・factor設定）を一元化する。
 }
 \examples{
-s <- new_statistics(wi_year, Abies_death_ratio,
-                    .data_Fig_yr_ba_kaminokodaira_Cryptomeria_Fagus_Abies_2024,
-                    .data_Fig_yr_ba_kaminokodaira_zone_2024)
+f1_raw <- data_Fig_yr_ba_kaminokodaira_Cryptomeria_Fagus_Abies_2024
+f2_raw <- data_Fig_yr_ba_kaminokodaira_zone_2024
+s <- new_statistics(wi_year, Abies_death_ratio,f1_raw, f2_raw)
 s
+str(s)
+
 }

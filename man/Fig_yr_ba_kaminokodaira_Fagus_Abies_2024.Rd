@@ -14,4 +14,5 @@ Draw a figure relatinships between year and basal area ratio for Fagus - Abies i
 }
 \examples{
 Fig_yr_ba_kaminokodaira_Fagus_Abies_2024()
+
 }

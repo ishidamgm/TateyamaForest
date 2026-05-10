@@ -7,7 +7,7 @@
 #' res<-Fig_Abies_wi_ba_mortality()
 #' res
 Fig_Abies_wi_ba_mortality<-function(){
-  . <- Abies
+  . <- TemperatureWIAbies_Population_BA_Mortality
   plot. <- c("Kagamiishi", "Matsuotoge","Kaminokodaira" )
   plot_labels <- c( "Timberline plot", "Subarctic plot","Ecotone plot")
   .$plot <- factor(.$plot, levels = plot., labels = plot_labels)
@@ -171,7 +171,7 @@ Fig_Abies_wi_ba_mortality<-function(){
     geom_smooth(method = "lm", se = FALSE, linewidth = 0.7) +
     scale_color_manual(values = col_vals) +
     labs(x = "WI", y = "BA ratio ((species-based)") +
-    coord_cartesian(xlim = c(22, 65), ylim = c(0.78, 1.30)) +
+    coord_cartesian(xlim = c(20, 57), ylim = c(0.78, 1.30)) +
     # plot名（bold）
     geom_text(data = reg_ba,
               aes(x = x, y = y_name, label = plot, color = plot),
@@ -208,7 +208,7 @@ Fig_Abies_wi_ba_mortality<-function(){
     geom_smooth(method = "lm", se = FALSE, linewidth = 0.7) +
     scale_color_manual(values = col_vals) +
     labs(x = "WI", y = "Cumulative Mortality ratio") +
-    coord_cartesian(xlim = c(22, 65), ylim = c(0, 0.55)) +
+    coord_cartesian(xlim = c(20, 57), ylim = c(0, 0.55)) +
     # plot名（bold）####
   geom_text(data = reg_mt,
             aes(x = x, y = y_name, label = plot, color = plot),
