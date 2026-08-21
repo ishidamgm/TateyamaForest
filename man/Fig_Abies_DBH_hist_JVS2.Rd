@@ -9,6 +9,15 @@ Fig_Abies_DBH_hist_JVS2()
 \description{
 Distributions of the diameter at breast height of A. mariesii during the first survey (2000) in each plot.
 }
+\section{Final TIFF output (JVS submission)}{
+
+\preformatted{
+tiff("Fig8.tiff", width = 3000, height = 1200, res = 300, compression = "lzw")
+Fig_Abies_DBH_hist_JVS2()
+dev.off()
+}
+}
+
 \examples{
 Fig_Abies_DBH_hist_JVS2()
 

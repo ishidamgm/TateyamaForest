@@ -2,14 +2,26 @@
 % Please edit documentation in R/Fig2024.R
 \name{Fig_Abies_wi_ba_mortality}
 \alias{Fig_Abies_wi_ba_mortality}
-\title{Fig_Abies_wi_ba_mortality}
+\title{FIGURE 11 | Relationships between the warmth index (WI) and (a) basal area ratio and
+(b) cumulative mortality ratio of Abies mariesii in the Timberline, Subarctic, and Ecotone plots.
+(c) Slope comparisons by ANCOVA (P values)}
 \usage{
 Fig_Abies_wi_ba_mortality()
 }
 \description{
-Fig_Abies_wi_ba_mortality
+FIGURE 11 | Relationships between the warmth index (WI) and (a) basal area ratio and
+(b) cumulative mortality ratio of Abies mariesii in the Timberline, Subarctic, and Ecotone plots.
+(c) Slope comparisons by ANCOVA (P values)
 }
 \examples{
 res<-Fig_Abies_wi_ba_mortality()
 res
+
+\preformatted{
+tiff("Fig11.tiff", width = 3000, height = 3000, res = 300, compression = "lzw")
+TateyamaForest::Fig_Abies_wi_ba_mortality()
+dev.off()
+# FIGURE 11 | Relationships between the warmth index (WI) and (a) basal area ratio and
+# (b) cumulative mortality ratio of _Abies mariesii_ in the Timberline, Subarctic, and Ecotone plots.
+}
 }

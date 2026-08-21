@@ -243,7 +243,7 @@ res2$pairwise
 
 # FIGURE 11 | Relationships between the warmth index (WI) and (a) basal area ratio and (b) cumulative mortality ratio of _Abies mariesii_ in the Timberline, Subarctic, and Ecotone plots. 
 
-```{r}
+```{r,fig.height=12}
 Abies
 res <- Fig_Abies_wi_ba_mortality()
 res

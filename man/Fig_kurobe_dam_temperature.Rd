@@ -2,13 +2,22 @@
 % Please edit documentation in R/WI.R
 \name{Fig_kurobe_dam_temperature}
 \alias{Fig_kurobe_dam_temperature}
-\title{Title}
+\title{Fig_kurobe_dam_temperature}
 \usage{
 Fig_kurobe_dam_temperature(d = kurobe_dam_temperature)
 }
 \description{
-Title
+Fig_kurobe_dam_temperature
 }
+\section{Final TIFF output (JVS submission)}{
+
+\preformatted{
+tiff("Fig3.tiff", width = 2000, height = 1800, res = 300, compression = "lzw")
+Fig_kurobe_dam_temperature()
+dev.off()
+}
+}
+
 \examples{
 res<-Fig_kurobe_dam_temperature()
 res

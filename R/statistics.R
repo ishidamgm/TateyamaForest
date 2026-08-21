@@ -163,13 +163,14 @@ print.statistics <- function(x, ...) {
 #'  s <- new_statistics(
 #' wi_year          = wi_year,
 #' Abies_death_ratio = Abies_death_ratio,
-#' f1_raw           = .data_Fig_yr_ba_kaminokodaira_Cryptomeria_Fagus_Abies_2024,
-#' f2_raw           = .data_Fig_yr_ba_kaminokodaira_zone_2024
+#' f1_raw           = data_Fig_yr_ba_kaminokodaira_Cryptomeria_Fagus_Abies_2024,
+#' f2_raw           =.data_Fig_yr_ba_kaminokodaira_zone_2024
 #' )
 #'
 #' (res<-statistics_cor_WI_AbiesCumulativeMortality(s))
 #' str(res)
 #'
+
 statistics_cor_WI_AbiesCumulativeMortality <- function(s) {
   stopifnot(inherits(s, "statistics"))
   message("Pearson correlation: WI vs. cumulative mortality")

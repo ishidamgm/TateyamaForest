@@ -1,7 +1,7 @@
 Package: TateyamaForest
 Type: Package
 Title: Forest data anarysys of Tateya vegetation monitoring
-Version: 0.0.0.20260509
+Version: 0.0.0.20260821
 Author: Ishida M & Nakajima H  & Kume A
 Maintainer: Ishida M <ishidam@sanchikanri.co.jp>
 Description: Tateya vegetation monitoring
@@ -22,4 +22,5 @@ VignetteBuilder: knitr
 Encoding: UTF-8
 LazyData: true
 URL: https://github.com/ishidamgm/TateyamaForest
-RoxygenNote: 7.3.3
+Config/roxygen2/version: 8.0.0
+RoxygenNote: 7.3.2

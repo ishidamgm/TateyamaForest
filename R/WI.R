@@ -66,20 +66,28 @@ F_kurobe_dum_mean_tmp <-function(year) {
   -47.932410 +   0.027340 *year
 }
 
-#' Title
+#' Fig_kurobe_dam_temperature
 #'
 #' @return
 #'
 #' @export
 #'
 #'
-#'
-#'
 #' @examples
 #' res<-Fig_kurobe_dam_temperature()
 #' res
 #'
+#' @section Final TIFF output (JVS submission):
+#' \preformatted{
+#' tiff("Fig3.tiff", width = 2000, height = 1800, res = 300, compression = "lzw")
+#'Fig_kurobe_dam_temperature()
+#'dev.off()
+#'}
+#'
+#'
 Fig_kurobe_dam_temperature <- function(d=kurobe_dam_temperature){
+  old_par <- par(las = 1)
+  on.exit(par(old_par))
 
 
   # plot ####
@@ -770,14 +778,26 @@ Fig_year_WI_2<-function(){
 
 }
 
+#
+#' Fig_year_WI_3
+#'
 #' @return
 #' @export
 #'
 #' @examples
 #'  res<-Fig_year_WI_3()
 #'  res
+#' @section Final TIFF output (JVS submission):
+#' \preformatted{
+#' tiff("Fig4.tiff", width = 3000, height = 2500, res = 300, compression = "lzw")
+#' Fig_year_WI_3()
+#'dev.off()
+#'}
 #'
 Fig_year_WI_3<-function(){
+  old_par <- par(mar = c(5, 4, 4, 11), xpd = TRUE, las = 1)
+  on.exit(par(old_par))
+
   intact_plot <- c("Bunazaka","Kaminokodaira","Matsuotoge","Kagamiishi")
   plot_no <- match(intact_plot,colnames(wi_year))
   legend_no <- match(intact_plot,leg$n)
@@ -790,19 +810,35 @@ Fig_year_WI_3<-function(){
   text(1960,33,"Subarctic zone",,cex=1.2, adj = 0, font = 3,  col = "grey60")
 
 
-  abline(h=c(15,45,55,85),lty=2,lwd=3,col="red")
-
+  #abline(h=c(15,45,55,85),lty=2,lwd=3,col="red")
   wi.<-wi_year #WI_with_KurodeDamObservation
+  x <- wi.$year
+  x_range <- range(x)
+  for(i in c(15,45,55,85))lines(x_range,c(i,i),lty=2,lwd=3,col="red")
+
   res<-c()
+  # for (i in 1:length(plot_no)){
+  #   x<-wi.$year
+  #   y<-wi.[,plot_no[i]]
+  #   res.<-lm(y~x)
+  #   res<-c(res,list(res.))
+  #   lines(x,y,type="l",lty=i, lwd=2,#pch=i,
+  #         col=leg$col[legend_no[i]])
+  #   abline(res.)
+  # }
   for (i in 1:length(plot_no)){
-    x<-wi.$year
-    y<-wi.[,plot_no[i]]
-    res.<-lm(y~x)
-    res<-c(res,list(res.))
-    lines(x,y,type="l",lty=i, lwd=2,#pch=i,
+
+    y <- wi.[,plot_no[i]]
+    res. <- lm(y~x)
+    res <- c(res, list(res.))
+    lines(x, y, type="l", lty=i, lwd=2,
           col=leg$col[legend_no[i]])
-    abline(res.)
+    x_range <- range(x)
+    y_pred <- predict(res., newdata = data.frame(x = x_range))
+    segments(x_range[1], y_pred[1], x_range[2], y_pred[2])
+
   }
+
   names(res)<-intact_plot
 
   for (ii in match(intact_plot,plt6$na)){
@@ -813,18 +849,31 @@ Fig_year_WI_3<-function(){
   }
 
 
-  legend(2003, 24, plot_name,
-         cex = 0.9,
+  # legend(2003, 24, plot_name,
+  #        cex = 0.9,
+  #        lty = 1:4,
+  #        lwd = 2,
+  #        col = leg$col[c(2, 4, 5, 7)],
+  #        y.intersp = 0.7,    # 行間（デフォルト1.0）
+  #        x.intersp = 0.2,    # 線とテキストの間隔
+  #        box.lwd   = 0.5,    # 枠線の太さ
+  #        inset     = 0.005    # 枠内余白
+  # )
+  legend(2030,60,#"right",
+         plot_name,
+         cex =1.0,                    # 凡例文字を拡大（0.9→1.1）
          lty = 1:4,
          lwd = 2,
          col = leg$col[c(2, 4, 5, 7)],
-         y.intersp = 0.7,    # 行間（デフォルト1.0）
-         x.intersp = 0.2,    # 線とテキストの間隔
-         box.lwd   = 0.5,    # 枠線の太さ
-         inset     = 0.005    # 枠内余白
-  )
+         y.intersp = 1.0,
+         x.intersp = 0.5,
+         box.lwd   = 0.5,
+         #inset     = c(-0.35, 0),      # プロット領域の右外側へ押し出す
+         xpd       = TRUE)             # プロット領域外への描画を許可
 
   invisible(res)
+
+  #Fig_year_WI_3()
 }
 
 

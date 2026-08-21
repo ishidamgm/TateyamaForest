@@ -2,14 +2,19 @@
 % Please edit documentation in R/Fig.R
 \name{Fig_Abies_death_ratio}
 \alias{Fig_Abies_death_ratio}
-\title{Title}
+\title{FIGURE 10 | Changes in cumulative mortality ratio of _Abies mariesii_ in each survey plot over time.}
 \usage{
 Fig_Abies_death_ratio()
 }
 \description{
-Title
+FIGURE 10 | Changes in cumulative mortality ratio of _Abies mariesii_ in each survey plot over time.
 }
 \examples{
 Fig_Abies_death_ratio()
-
+\preformatted{
+tiff("Fig10.tiff", width = 2000, height = 1700, res = 300, compression = "lzw")
+TateyamaForest::Fig_Abies_death_ratio()
+dev.off()
+# FIGURE 10 | Changes in cumulative mortality ratio of _Abies mariesii_ in each survey plot over time.
+}
 }

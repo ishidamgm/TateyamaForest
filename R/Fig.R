@@ -917,16 +917,22 @@ Fig_Kaminokodaira_Abies_death_ratio<-function(){
 
 }
 
-#' Title
+#' FIGURE 10 | Changes in cumulative mortality ratio of _Abies mariesii_ in each survey plot over time.
 #'
 #' @return
 #' @export
 #'
 #' @examples
 #' Fig_Abies_death_ratio()
-#'
-Fig_Abies_death_ratio<-function(){
+#' \preformatted{
+#' tiff("Fig10.tiff", width = 2000, height = 1700, res = 300, compression = "lzw")
+#' TateyamaForest::Fig_Abies_death_ratio()
+#' dev.off()
+#' # FIGURE 10 | Changes in cumulative mortality ratio of _Abies mariesii_ in each survey plot over time.
+#' }
 
+Fig_Abies_death_ratio<-function(){
+ par(las=1)
   plt.<-c("Kaminokodaira","Matsuotoge","Kagamiishi")
   plr<-match(plt.,plt2$na)
   Abies_death_ratio<-c()
@@ -944,7 +950,9 @@ Fig_Abies_death_ratio<-function(){
         type="b",
         xlim=c(1998,2026),
         pch=leg$pch[leg.[1]],col=leg$col[leg.[1]],lty=leg$lty[leg.[1]],
+        #main=expression(italic("Abies mariesii")),
         main="Abies mariesii",
+        font.main=3,
         ylab="Cumulative Mortality ratio",xlab="Year",cex.lab=1.2,lwd=2)
 
   for (ii in 2:3){

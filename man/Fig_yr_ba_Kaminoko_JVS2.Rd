@@ -12,4 +12,10 @@ ANCOVA for slope of regression lines for WI and Basal area at the Ecotone plot
 \examples{
 Fig_yr_ba_Kaminoko_JVS2()
 
+\preformatted{
+tiff("Fig6.tiff", width = 3000, height = 1800, res = 300, compression = "lzw")
+TateyamaForest::Fig_yr_ba_Kaminoko_JVS2()
+dev.off()
+#  FIGURE 6 | Changes in basal area in the Ecotone plot over time.
+}
 }
