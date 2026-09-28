@@ -1,2 +1,2 @@
-# Tateyama Vetatation Monitoring
+# Tateyama Vegetation Monitoring
 # Forest Dynamics
