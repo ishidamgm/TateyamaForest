@@ -9,9 +9,6 @@ death_ratio(
   form = paste0("f0", 1:7)
 )
 }
-\arguments{
-\item{form}{}
-}
 \description{
 Title
 }

@@ -6,9 +6,6 @@
 \usage{
 Fig_snow_depth(dat = snow)
 }
-\arguments{
-\item{dat}{}
-}
 \description{
 Fig_snow_depth
 }

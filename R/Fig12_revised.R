@@ -29,6 +29,13 @@
 #' #Fig12_revised(save_pdf = TRUE)           # save as PDF
 #' result <- Fig12_revised()                # capture data
 #' result$ks_test                           # check K-S test result
+#' @section Final TIFF output (JVS submission):
+#' \preformatted{
+#' tiff("Fig12.tiff", width = 2000, height = 3000, res = 300, compression = "lzw")
+#' cairo_pdf("Fig12.pdf", width = 7, height = 7)
+#'Fig12_revised ()
+#'dev.off()
+#'}
 Fig12_revised <- function(
     mat       = 6.2,        # mean annual temperature at Kaminokodaira (°C)
     col_bar   = "#CC3333",  # bar color for death histogram
@@ -88,7 +95,7 @@ Fig12_revised <- function(
 
   op <- par(
     mfrow  = c(2, 1),
-    mar    = c(4.5, 5, 3, 2),
+    mar    = c(4.5, 5.2, 3, 2),
     oma    = c(0, 0, 1, 0),
     mgp    = c(3, 0.7, 0),
     tcl    = -0.3
@@ -112,9 +119,15 @@ Fig12_revised <- function(
   abline(v = years, col = "grey70", lty = 3, lwd = 0.8)
 
   # Annotate n and final value
-  text(2024, 0.88 + 0.05,
-       labels = sprintf("%.0f%%  (n = %d/%d)", 88, n_fell, n_dead_standing),
+  # text(2024, 0.88 + 0.05,
+  #      labels = sprintf("%.0f%%  (n = %d/%d)", 88, n_fell, n_dead_standing),
+  #      cex = 0.85, adj = c(1, 0))
+  #
+  text(2023, 0.88 - 0.15,
+       labels = sprintf("%.0f%% ", 88),
        cex = 0.85, adj = c(1, 0))
+
+  lines(c(2023,2024),c(0.78,0.88),col="red")
 
   # Horizontal grid
   abline(h = seq(0.2, 1.0, 0.2), col = "grey85", lty = 3)
@@ -123,73 +136,69 @@ Fig12_revised <- function(
   mtext("(a)", side = 3, adj = 0, line = 0.8, font = 2, cex = 1.1)
 
   # ── Panel (b) ────────────────────────────────────────────────
-  bp <- barplot(
-    h$counts / sum(h$counts),
-    names.arg = h$mids,
-    col       = col_bar,
-    border    = "black",
-    space     = 0,
-    xlim      = c(0, length(h$mids)),
-    ylim      = c(0, 0.55),
-    xlab      = "Estimated year of death",
-    ylab      = "Relative frequency",
-    cex.lab   = 1.1, cex.axis = 0.9,
-    cex.names = 0.85,
-    las       = 1,
-    axes      = TRUE
+  #h         <- hist(yr_died., breaks = breaks., plot = FALSE)
+  h$density <- h$counts / sum(h$counts)   # ← これが抜けていたか、反映されていない
+
+  gap <- 0.3   # 隙間の幅（年単位）0〜binwidth未満で調整
+
+  plot(NA, xlim = c(1970, 2015), ylim = c(0, 0.55),
+       xlab = "Estimated year of death", ylab = "Relative frequency",
+       cex.lab = 1.1, cex.axis = 0.9, las = 1, axes = FALSE)
+  axis(1, at = seq(1970, 2015, by = 5), cex.axis = 0.9)
+  axis(2, las = 1, cex.axis = 0.9)
+  abline(v = seq(1970, 2015, 5), col = "grey85", lty = 3)
+  abline(h = seq(0, 0.5, 0.1), col = "grey85", lty = 3)
+  box()
+
+  rect(
+    xleft   = h$breaks[-length(h$breaks)] + gap/2,
+    xright  = h$breaks[-1] - gap/2,
+    ybottom = 0,
+    ytop    = h$counts / sum(h$counts),
+    col     = col_bar,
+    border  = "black"
   )
 
-  # Normal distribution overlay
-  # Map x_fit to barplot coordinates
-  x_bp <- (x_fit - min(breaks.)) / 5   # convert year to bar index
-  lines(x_bp, y_fit, col = "black", lwd = 1.5, lty = 1)
+  # Normal distribution overlay（変換不要、実年のまま）
+  lines(x_fit, y_fit, col = "black", lwd = 1.5, lty = 1)
 
-  # Mean death year line
-  mean_bp <- (mu_d - min(breaks.)) / 5
-  abline(v = mean_bp, col = "black", lty = 2, lwd = 1.5)
-  text(mean_bp + 0.1, 0.50,
-       labels = sprintf("Mean = %.1f yr\n(\u00b1 %.1f SD)", mu_d, sd_d),
-       adj = c(0, 1), cex = 0.82)
+  # Mean death year line（変換不要）
+  abline(v = mu_d, col = "black", lty = 2, lwd = 1.5)
+  # text(mu_d + 0.5, 0.50,
+  #      labels = sprintf("Mean = %.1f yr\n(\u00b1 %.1f SD)", mu_d, sd_d),
+  #      adj = c(0, 1), cex = 0.82)
 
-  # WI > 55 reference (1994)
-  wi55_bp <- (1994 - min(breaks.)) / 5
-  abline(v = wi55_bp, col = "navy", lty = 3, lwd = 1.2)
-  text(wi55_bp + 0.1, 0.46,
+  #legeng(1970,0.52,C(sprintf("Mean = %.1f yr\n(\u00b1 %.1f SD)", mu_d, sd_d),))
+
+  # WI > 55 reference (1994)（変換不要）
+  abline(v = 1994, col = "navy", lty = 3, lwd = 1.2)
+  text(1994 + 0.5, 0.46,
        labels = "WI > 55\n(from 1994)",
        adj = c(0, 1), cex = 0.75, col = "navy")
+  #plot(1970:2015,seq(0.0,0.5,length=46))
 
-  # K-S test annotation
-  mtext(
-    sprintf("K\u2013S test: D = %.3f, p = %.3f  (normal distribution not rejected)",
-            ks_res$statistic, ks_res$p.value),
-    side = 1, line = 3.5, cex = 0.78
-  )
-
-  # Legend
-  legend("topleft",
+  legend(1969, 0.57,
          legend = c(
-           "Relative frequency",
-           "Normal distribution fit",
-           sprintf("Mean death year (%.1f)", mu_d)
+           sprintf("Mean = %.1f", mu_d),
+           "normal distribution fit",  # 2行目を独立した要素にする
+           sprintf("(K\u2013S test: D = %.3f, p = %.3f)", ks_res$statistic, ks_res$p.value) # 3行目にする
          ),
-         fill   = c(col_bar, NA, NA),
-         lty    = c(NA, 1, 2),
-         lwd    = c(NA, 1.5, 1.5),
-         border = c("black", NA, NA),
-         cex    = 0.82,
-         bty    = "n"
+         lty    = c(3, 2, NA),   # 3行目は線が不要なので NA を追加
+         lwd    = c(1.5, 1.5, NA), # 3行目は NA を追加
+         border = c(NA, NA, NA),
+         cex    = 0.7
   )
 
   mtext("(b)", side = 3, adj = 0, line = 0.8, font = 2, cex = 1.1)
 
   # ── Overall title ─────────────────────────────────────────────
-  mtext(
-    expression(
-      paste("Fig. 12.  Dead standing trees and estimated death years of ",
-            italic("Abies mariesii"), " in the Ecotone plot")
-    ),
-    outer = TRUE, side = 3, line = -0.5, cex = 0.92
-  )
+  # mtext(
+  #   expression(
+  #     paste("Fig. 12.  Dead standing trees and estimated death years of ",
+  #           italic("Abies mariesii"), " in the Ecotone plot")
+  #   ),
+  #   outer = TRUE, side = 3, line = -0.5, cex = 0.92
+  # )
 
   par(op)
 

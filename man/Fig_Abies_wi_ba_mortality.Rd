@@ -18,7 +18,7 @@ res<-Fig_Abies_wi_ba_mortality()
 res
 
 \preformatted{
-tiff("Fig11.tiff", width = 3000, height = 3000, res = 300, compression = "lzw")
+tiff("Fig11.tiff", width = 2000, height = 2000, res = 300, compression = "lzw")
 TateyamaForest::Fig_Abies_wi_ba_mortality()
 dev.off()
 # FIGURE 11 | Relationships between the warmth index (WI) and (a) basal area ratio and

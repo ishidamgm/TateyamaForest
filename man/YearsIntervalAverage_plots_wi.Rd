@@ -10,9 +10,6 @@ YearsIntervalAverage_plots_wi(
   year.clm = "year"
 )
 }
-\arguments{
-\item{data}{}
-}
 \description{
 YearsIntervalAverage_plots
 }

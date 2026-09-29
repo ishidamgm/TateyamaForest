@@ -6,9 +6,6 @@
 \usage{
 Fig_wi_ba_cor_ancova_JVS2(clim_var = "WI")
 }
-\arguments{
-\item{clim_var}{}
-}
 \description{
 Fig_wi_ba_cor_ancova_JVS2
 }

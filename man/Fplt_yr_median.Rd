@@ -8,9 +8,6 @@ Fplt_yr_median(site = "Kaminokodaira", period = 2:7)
 
 Fplt_yr_median(site = "Kaminokodaira", period = 2:7)
 }
-\arguments{
-\item{period}{}
-}
 \description{
 Estimate death year of Abies using MTF (Mean Time to Fall) fall
 

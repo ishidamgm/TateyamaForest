@@ -6,9 +6,6 @@
 \usage{
 LLToM3Code(lat = 36.63333, lon = 137.5875)
 }
-\arguments{
-\item{lon}{}
-}
 \value{
 mesh3 code
 }

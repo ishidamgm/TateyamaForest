@@ -6,9 +6,6 @@
 \usage{
 ci_calc(T12 = 1:12)
 }
-\arguments{
-\item{t12}{}
-}
 \description{
 Title
 }

@@ -77,6 +77,7 @@ yr_sp_ba_site <-function(cond=substitute(f.>0)){
 #'
 #' @examples
 #' BA <- yr_ba_site(cond=substitute(f.>0))
+#' par(las=1)
 #'  plot(0,type="n" , lty=1,pch=1,col=1,
 #'      xlim=c(1998,2025) , ylim=c(0.97,1.23),
 #'      xlab="Year",ylab="Basal area ratio")
@@ -87,16 +88,16 @@ yr_sp_ba_site <-function(cond=substitute(f.>0)){
 #'                      lty=leg$lty[ii],pch=leg$pch[ii],col=leg$col[ii])#'
 #' }
 #'
-#' legend(2000,1.2,leg$n,pch=leg$pch,col=leg$col,lty=leg$lty,cex=0.7)
+#' legend(1998,1.23,leg$n,pch=leg$pch,col=leg$col,lty=leg$lty,cex=0.7)
 #'
 #'
 yr_ba_site <-function(cond=substitute(f.>0)){
   ## load data ####
-  d0  <- TateyamaForest2024$d0
-  plt <- TateyamaForest2024$plot_profile
-  cnD <- TateyamaForest2024$colnames_D
-  cnf <- TateyamaForest2024$colnames_f
-  yr  <- TateyamaForest2024$yr
+  d0  <- TateyamaForest2025$d0
+  plt <- TateyamaForest2025$plot_profile
+  cnD <- TateyamaForest2025$colnames_D
+  cnf <- TateyamaForest2025$colnames_f
+  yr  <- TateyamaForest2025$yr
 
   # . <- TateyamaForest2024
   # plt=.$plot_profile;cnD=.$colnames_D;cnf=.$colnames_f;yr=.$yr
@@ -132,12 +133,6 @@ yr_ba_site <-function(cond=substitute(f.>0)){
 #'
 #' Fig_yr_ba_site2()
 #'
-#' \preformatted{
-#' tiff("Fig5.tiff", width = 2000, height = 1700, res = 300, compression = "lzw")
-#' TateyamaForest::Fig_yr_ba_site2()
-#' dev.off()
-#' # FIGURE 5 | Changes in the total basal area in each plot over time.
-#' }
 #'
 #'
 Fig_yr_ba_site2 <-function(){
@@ -167,6 +162,13 @@ Fig_yr_ba_site2 <-function(){
 #' @examples
 #'
 #' Fig_yr_ba_site2_zone ()
+#' \preformatted{
+#' tiff("Fig5.tiff", width = 2000, height = 1700, res = 300, compression = "lzw")
+#' cairo_pdf("Fig5.pdf", width = 6, height = 5.5)
+#' TateyamaForest::Fig_yr_ba_site2_zone()
+#' dev.off()
+#' # FIGURE 5 | Changes in the total basal area in each plot over time.
+#' }
 #'
 #'
 Fig_yr_ba_site2_zone <-function(){
@@ -311,7 +313,12 @@ Fig_yr_ba_kaminokodaira_zone_2024 <- function(){
 }
 
 
-
+#' par(ps  = 9,    # 基準を9ptに
+#' cex = 1.0, # 倍率は1.0のまま
+#' cex.axis = 1,   # 軸数字 → 8.1pt
+#' cex.lab  = 1,   # 軸ラベル → 9pt
+#' mar = c(4, 4, 3, 3),
+#' lheight=0.5)
 
 #' ANCOVA for slope of regression lines for WI and Basal area at the Ecotone plot
 #'
@@ -319,10 +326,19 @@ Fig_yr_ba_kaminokodaira_zone_2024 <- function(){
 #' @export
 #'
 #' @examples
+#' dev.off()
 #' Fig_yr_ba_Kaminoko_JVS2()
 #'
 #' \preformatted{
 #' tiff("Fig6.tiff", width = 3000, height = 1800, res = 300, compression = "lzw")
+#' cairo_pdf("Fig6.pdf", width = 7, height = 3.8)
+#' par(ps      = 7,
+#'     cex     = 0.8,
+#'     cex.axis= 1,
+#'     cex.lab = 1,
+#'     mar     = c(4, 5, 2, 1),
+#'     lheight = 0.8)   # ← 行間の倍率（デフォルト=1）
+#' #'
 #' TateyamaForest::Fig_yr_ba_Kaminoko_JVS2()
 #' dev.off()
 #' #  FIGURE 6 | Changes in basal area in the Ecotone plot over time.
@@ -462,7 +478,7 @@ Fig_wi_ba_cor_ancova_JVS2 <- function( clim_var="WI") {
 #' res
 #'
 #' \preformatted{
-#' tiff("Fig11.tiff", width = 3000, height = 3000, res = 300, compression = "lzw")
+#' tiff("Fig11.tiff", width = 2000, height = 2000, res = 300, compression = "lzw")
 #' TateyamaForest::Fig_Abies_wi_ba_mortality()
 #' dev.off()
 #' # FIGURE 11 | Relationships between the warmth index (WI) and (a) basal area ratio and

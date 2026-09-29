@@ -6,9 +6,6 @@
 \usage{
 YearsIntervalAverage(yr, v, yr.interval)
 }
-\arguments{
-\item{yr.interval}{}
-}
 \description{
 YearsIntervalAverage
 }

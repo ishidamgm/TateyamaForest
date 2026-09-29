@@ -12,7 +12,7 @@ BA_calc.old(d, sp = "")
 \item{sp}{Roman species name. if default is sp="", that operate for all species}
 }
 \value{
-vector of sum of basal area for each period(year)
+　vector of sum of basal area for each period(year)
 }
 \description{
 omit tree data with is.na(dbh) and dbh < 10cm

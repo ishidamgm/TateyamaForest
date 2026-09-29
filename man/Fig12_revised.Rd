@@ -18,13 +18,20 @@ Fig12_revised(
   filename = "Fig12_revised"
 )
 }
-\arguments{
-\item{filename}{}
-}
 \description{
 Required objects: dd4, plt2, MTF(), Fplt_yr_median()
 ---------------------------------------------------------------
 }
+\section{Final TIFF output (JVS submission)}{
+
+\preformatted{
+tiff("Fig12.tiff", width = 2000, height = 3000, res = 300, compression = "lzw")
+cairo_pdf("Fig12.pdf", width = 7, height = 7)
+Fig12_revised ()
+dev.off()
+}
+}
+
 \examples{
 Fig12_revised ()
 

@@ -2,7 +2,7 @@
 % Please edit documentation in R/Fig.R
 \name{BA_calc2}
 \alias{BA_calc2}
-\title{library("TateyamaForest")
+\title{　library("TateyamaForest")
  help(package="TateyamaForest")
  data(package="TateyamaForest")}
 \usage{
@@ -18,7 +18,7 @@ BA_calc2(d, sp = "", dbh.min = 10, f.min = 1)
 \item{f.min}{a minimum value of vital index for calculation  (default = 1)}
 }
 \value{
-vector of sum of basal area for each period(year)
+　vector of sum of basal area for each period(year)
 }
 \description{
 Calculates basal areas of each period

@@ -6,9 +6,6 @@
 \usage{
 M3CodeToLatLon(M3Code = 54374091)
 }
-\arguments{
-\item{M3Code}{}
-}
 \value{
 latitude and longitude
 }

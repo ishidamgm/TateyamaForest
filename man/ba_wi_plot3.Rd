@@ -6,9 +6,6 @@
 \usage{
 ba_wi_plot3(wi., d2)
 }
-\arguments{
-\item{d2}{}
-}
 \description{
 ba_wi_plot3
 }

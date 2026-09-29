@@ -168,7 +168,8 @@ ratio_wi55up<-100*sum(wi.>55)/length(wi.)
 
 # FIGURE 5 | Changes in the total basal area in each plot over time.
 ```{r}
-Fig_yr_ba_site2()
+Fig_yr_ba_site2_zone() 
+#Fig_yr_ba_site2()
 ```
 
 

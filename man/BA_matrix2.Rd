@@ -7,8 +7,6 @@
 BA_matrix2(sp = "オオシラビソ", dbh.min = 10, f.min = 1)
 }
 \arguments{
-\item{sp}{}
-
 \item{dbh.min}{a minimum value of DBH for calculation (default = 10)}
 
 \item{f.min}{a minimum value of vital index for calculation  (default = 1)}

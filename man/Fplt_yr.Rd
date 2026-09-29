@@ -6,9 +6,6 @@
 \usage{
 Fplt_yr(site = "Kaminokodaira", period = 1)
 }
-\arguments{
-\item{period}{}
-}
 \description{
 Title
 }

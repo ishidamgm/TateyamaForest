@@ -16,7 +16,7 @@ BA_calc(d, sp = "スギ", dbh.min = 10, f.min = 1)
 \item{f.min}{a minimum value of vital index for calculation  (default = 1)}
 }
 \value{
-vector of sum of basal area for each period(year)
+　vector of sum of basal area for each period(year)
 }
 \description{
 omit tree data with is.na(dbh) and dbh < 10cm
