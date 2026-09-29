@@ -1,0 +1,124 @@
+---
+title: "TateyamaForest_1368_1459_correct"
+author: "Ishida M"
+date: "`r Sys.Date()`"
+output:
+  html_document:
+    toc: true
+    toc_float:
+      collapsed: false
+      smooth_scroll: true
+    toc_depth: 4
+    df_print: paged
+---
+
+
+
+# mail
+
+Dear Jayalakshmi,
+
+Thank you very much for your help with the production of our article.
+
+Article ID: JVS_70175
+Article DOI: 10.1111/JVS.70175
+Manuscript Reference ID: 5217335
+
+During proof checking, we found an error in the elevation of the meteorological observation site. The paper states 1,368 m, but the correct figure is 1,459 m. We do not expect the main conclusions to change, but several results derived from this value, including the warmth index, will need to be revised.
+
+Because these revisions go beyond typical proof corrections, we are unlikely to meet today's 6:00 PM (JST) deadline. We would therefore like to ask you to put the proof on hold. If necessary, we would be grateful if you could consult the handling editor on whether the revised results require editorial review before publication.
+
+We are working urgently on the revisions and will send the corrected text, together with the other proof corrections from the co-authors, as soon as possible. We apologize for the inconvenience.
+
+Best regards,
+
+Megumi Ishida
+28 September 2026
+
+# correct
+
+```{r, message=FALSE}
+#library(package="TateyamaForest")
+devtools::load_all("../../..")
+```
+
+# RData
+
+```{r, message=FALSE}
+fl<-read.csv("../alt_correct_list.csv")
+fl
+```
+
+## 1368m.png
+
+![](1368m.png)
+
+## eq1
+
+![](eq1.png)
+
+## Fig04.png
+
+![](Fig04.png)
+
+### response
+
+
+
+```{r}
+Fig_year_WI_3()
+
+```
+
+## WI-increased.png
+
+![](WI-increased.png)
+
+## Fig7.png
+
+![](Fig7.png)
+
+## WI-regression.png
+
+![](WI-regression.png)
+
+## WI-ANCOVA
+
+![](WI-ANCOVA.png)
+
+## WItrend3
+
+![](WItrend3.png)
+
+
+## 3-1-change in WI
+
+![](3-1-change in WI.png)
+
+## EcotonePlot-WI
+
+![](EcotonePlot-WI.png)
+
+## WItrend
+
+![](WItrend.png)
+
+## Fig11
+
+![](Fig11.png)
+
+## WItrend2
+
+![](WItrend2.png)
+
+
+
+
+
+
+
+## zendo.png
+
+![](zendo.png)
+
+
