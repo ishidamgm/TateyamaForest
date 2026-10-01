@@ -7,6 +7,8 @@
 BA_matrix(sp = "オオシラビソ")
 }
 \arguments{
+\item{sp}{}
+
 \item{d}{data frame of forest stand trees}
 }
 \description{

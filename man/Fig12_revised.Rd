@@ -18,6 +18,9 @@ Fig12_revised(
   filename = "Fig12_revised"
 )
 }
+\arguments{
+\item{filename}{}
+}
 \description{
 Required objects: dd4, plt2, MTF(), Fplt_yr_median()
 ---------------------------------------------------------------

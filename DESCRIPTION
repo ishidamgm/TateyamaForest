@@ -4,7 +4,7 @@ Title: Forest Data Analysis of Tateyama Vegetation Monitoring
 Version: 1.0.1
 Author: Ishida M & Nakajima H  & Kume A
 Maintainer: Ishida M <ishidam@sanchikanri.co.jp>
-Description: Tools and data for the analysis of long-term vegetation monitoring plots on Mt. Tateyama.
+Description: Tools and data for the analysis of long-term vegetation monitoring plots on Mt. Tateyama.　The elevation of the meteorological observation site (Kurobe Dam) is 1459 m.
 License: GPL (>= 2)
 Depends: 
     R (>= 3.6.2),
@@ -23,3 +23,4 @@ Encoding: UTF-8
 LazyData: true
 URL: https://github.com/ishidamgm/TateyamaForest
 Config/roxygen2/version: 8.1.0
+RoxygenNote: 7.3.2

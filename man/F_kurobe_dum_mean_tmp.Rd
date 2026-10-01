@@ -7,6 +7,9 @@
 \usage{
 F_kurobe_dum_mean_tmp(year)
 }
+\arguments{
+\item{year}{}
+}
 \value{
 mean temperature
 }

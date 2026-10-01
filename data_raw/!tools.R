@@ -5,6 +5,19 @@ library(package="TateyamaForest")
 help(package="TateyamaForest")
 data(package="TateyamaForest")
 
+#
+devtools::load_all()
+
+# news ####
+usethis::use_news_md()
+
+# clipr ####
+library(clipr)
+read_clip()
+
+tbl <- data.frame(a=c(1,2,3), b=c(4,5,6))
+write_clip(tbl)
+
 
 # ファイル名を指定して変換する即席関数
 rds_to_rda <- function(rds_path, rda_path) {

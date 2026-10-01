@@ -706,7 +706,7 @@ Fig_year_WI_JP2<-function(){
 
 
   abline(h=c(45,55),lty=2,lwd=3,col="red")
-  wi.<-WI_with_KurodeDamObservation
+  wi.<-WI_with_KurobeDamObservation
   for (i in 1:length(plot_no)){
     lines(rownames(wi.),wi.[,plot_no[i]],type="l",lty=i, lwd=2,#pch=i,
           col=leg$col[legend_no[i]])
@@ -749,7 +749,7 @@ Fig_year_WI_2<-function(){
 
 
   abline(h=c(45,55),lty=2,lwd=3,col="red")
-  wi.<-WI_with_KurodeDamObservation
+  wi.<-WI_with_KurobeDamObservation
   for (i in 1:length(plot_no)){
     lines(rownames(wi.),wi.[,plot_no[i]],type="l",lty=i, lwd=2,#pch=i,
           col=leg$col[legend_no[i]])
@@ -818,7 +818,7 @@ Fig_year_WI_3<-function(){
 
 
   #abline(h=c(15,45,55,85),lty=2,lwd=3,col="red")
-  wi.<-wi_year #WI_with_KurodeDamObservation
+  wi.<-wi_year #WI_with_KurobeDamObservation
   x <- wi.$year
   x_range <- range(x)
   for(i in c(15,45,55,85))lines(x_range,c(i,i),lty=2,lwd=3,col="red")

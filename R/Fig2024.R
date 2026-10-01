@@ -565,13 +565,13 @@ Fig_Abies_wi_ba_mortality <- function(){
 
   pos_ba <- data.frame(
     plot   = levels(.$plot),
-    x      = c(28, 38.5, 58.0),
+    x      = c(28, 38.5, 58.0)+3,  # !!! +3
     y_name = c(0.8, 0.78, 1.32),
     y_reg  = c(0.64, 0.62, 1.15)     # y_nameよりさらに離す（0.17〜0.20差）
   )
   pos_mt <- data.frame(
     plot   = levels(.$plot),
-    x      = c(27, 38.5, 56.0),
+    x      = c(27, 38.5, 56.0)+3,  # !!! +3
     y_name = c(0.46, 0.35, 0.45),
     y_reg  = c(0.35, 0.24, 0.34)     # 同様に0.11〜0.12差程度広げる
   )

@@ -35,27 +35,40 @@ Best regards,
 Megumi Ishida
 28 September 2026
 
-# correct
+# correct Branch "alt_correct"
 
 ```{r, message=FALSE}
+system("git branch --show-current", intern = TRUE)
 #library(package="TateyamaForest")
 devtools::load_all("../../..")
 ```
 
+# csv
+[*] YearsIntervalCalc_plots_temp.csv    (alt_correct.R)
+
 # RData
 
+## wi RData
+
 ```{r, message=FALSE}
-fl<-read.csv("../alt_correct_list.csv")
+fl<-read.csv("../old_RData.csv")
 fl
+knitr::kable(fl) 
 ```
+
+# Manuscript 
 
 ## 1368m.png
 
 ![](1368m.png)
 
+### response OK!! 5.docx
+
 ## eq1
 
 ![](eq1.png)
+
+### response OK!! 5.docx
 
 ## Fig04.png
 
@@ -63,20 +76,31 @@ fl
 
 ### response
 
-
-
 ```{r}
-Fig_year_WI_3()
+res<-Fig_year_WI_3()
+res
 
 ```
+
+
 
 ## WI-increased.png
 
 ![](WI-increased.png)
 
+### response todo
+
 ## Fig7.png
 
 ![](Fig7.png)
+```{r}
+ # .data_Fig_yr_ba_kaminokodaira_zone_2024
+ # .data_Fig_yr_ba_kaminokodaira_Cryptomeria_Fagus_Abies_2024
+  
+res<-Fig_wi_ba_cor_ancova_JVS2()
+res
+```
+
 
 ## WI-regression.png
 
@@ -107,13 +131,68 @@ Fig_year_WI_3()
 
 ![](Fig11.png)
 
+```{r,fig.height=12}
+Abies
+res <- Fig_Abies_wi_ba_mortality()
+res
+
+```
+
+
 ## WItrend2
 
 ![](WItrend2.png)
 
+## S6
+
+![](S6.png)
+```{r}
+  s <- new_statistics(
+    wi_year          = wi_year,
+    Abies_death_ratio = Abies_death_ratio,
+    f1_raw           = data_Fig_yr_ba_kaminokodaira_Cryptomeria_Fagus_Abies_2024,
+    f2_raw           = data_Fig_yr_ba_kaminokodaira_zone_2024
+  )
+
+  print(s)
+```
+
+
+## ANCOVA: BAratio ~ WI * species/zone
+
+```{r}
+res4 <- statistics_ANCOVA_wi_ba_EcotonePlot(s)
+res4$by_species$slopes
+```
+
+## ANCOVA: cumulative mortality ratio ~ year * plot
+
+```{r}
+
+
+res2 <- statistics_ANCOVA_Abies_CumulativeDeathRatio_year_plot(s)
+res2$pairwise
+```
+
+## S7
+
+![](S7.png)
+
+```{r}
 
 
 
+tbl <- Table_TemperatureWIAbiesPopulation_cor()
+
+knitr::kable(tbl) |>
+  kableExtra::kable_styling(
+    bootstrap_options = c("striped", "condensed"),
+    font_size = 11,
+    full_width = TRUE
+  ) |>
+  kableExtra::scroll_box(width = "100%")
+
+```
 
 
 

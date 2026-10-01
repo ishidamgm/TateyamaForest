@@ -6,6 +6,9 @@
 \usage{
 vital_mortality(d., sp. = "")
 }
+\arguments{
+\item{d}{}
+}
 \value{
 matrix of mortality
 }

@@ -6,6 +6,9 @@
 \usage{
 Df_table(plot.name = "Arimine")
 }
+\arguments{
+\item{plot.name}{}
+}
 \value{
 a data frame of plot species(sp), DBH(D),vitality index(f)
 }

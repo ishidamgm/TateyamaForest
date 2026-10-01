@@ -6,6 +6,9 @@
 \usage{
 n2s(d)
 }
+\arguments{
+\item{d}{}
+}
 \value{
 string degree, minutes,secant ddd.mmssss
 }

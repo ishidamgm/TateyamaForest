@@ -15,6 +15,9 @@ dbh_hist_term1to7(
   ...
 )
 }
+\arguments{
+\item{term}{}
+}
 \description{
 histgram of dbh including dead standing trees
 in 2000 (term 1) at Kaminokodaira

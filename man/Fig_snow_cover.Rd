@@ -6,6 +6,9 @@
 \usage{
 Fig_snow_cover(dat = snow)
 }
+\arguments{
+\item{dat}{}
+}
 \description{
 Fig_snow_cover
 }

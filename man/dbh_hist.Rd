@@ -13,6 +13,9 @@ dbh_hist(
   ...
 )
 }
+\arguments{
+\item{term}{}
+}
 \description{
 histgram of dbh including dead standing trees
 }

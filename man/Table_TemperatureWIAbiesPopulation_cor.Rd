@@ -11,6 +11,9 @@
 \usage{
 Table_TemperatureWIAbiesPopulation_cor(p_values = TRUE)
 }
+\arguments{
+\item{p_values}{}
+}
 \value{
 data frame for arranged table
 }

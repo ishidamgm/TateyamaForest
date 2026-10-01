@@ -6,6 +6,9 @@
 \usage{
 BasalArea_1_6(plotname = "Kaminokodaira", species = "ooshirabiso")
 }
+\arguments{
+\item{species}{}
+}
 \value{
 data.frame(Year,BasaAera)
 }

@@ -6,6 +6,9 @@
 \usage{
 s2n(d)
 }
+\arguments{
+\item{d}{}
+}
 \value{
 numeric degree
 }

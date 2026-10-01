@@ -6,6 +6,9 @@
 \usage{
 YearsIntervalCalc(yr, v, yr.interval, method = c("mean", "min", "max"))
 }
+\arguments{
+\item{method}{}
+}
 \description{
 YearsIntervalCalc
 }
