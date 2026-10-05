@@ -791,7 +791,7 @@ Fig_year_WI_2<-function(){
 #' @section Final TIFF output (JVS submission):
 #' \preformatted{
 #' tiff("Fig4.tiff", width = 3000, height = 2500, res = 300, compression = "lzw")
-#' cairo_pdf("Fig4.pdf", width = 7.09, height = 5.5)
+#' #cairo_pdf("Fig4.pdf", width = 7.09, height = 5.5)
 #'  par(ps  = 9,    # 基準を9ptに
 #' cex = 1.0,  # 倍率は1.0のまま
 #' cex.axis = 0.9,   # 軸数字 → 8.1pt
@@ -866,7 +866,7 @@ Fig_year_WI_3<-function(){
   #        box.lwd   = 0.5,    # 枠線の太さ
   #        inset     = 0.005    # 枠内余白
   # )
-  legend(2030,60,#"right",
+  legend(2028,60,#"right",
          plot_name,
          cex =1.0,                    # 凡例文字を拡大（0.9→1.1）
          lty = 1:4,

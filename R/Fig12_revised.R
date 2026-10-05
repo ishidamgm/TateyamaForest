@@ -170,11 +170,11 @@ Fig12_revised <- function(
 
   #legeng(1970,0.52,C(sprintf("Mean = %.1f yr\n(\u00b1 %.1f SD)", mu_d, sd_d),))
 
-  # WI > 55 reference (1994)（変換不要）
-  abline(v = 1994, col = "navy", lty = 3, lwd = 1.2)
-  text(1994 + 0.5, 0.46,
-       labels = "WI > 55\n(from 1994)",
-       adj = c(0, 1), cex = 0.75, col = "navy")
+  # WI > 55 reference (1994)（変換不要） !!!
+  # abline(v = 1994, col = "navy", lty = 3, lwd = 1.2)
+  # text(1994 + 0.5, 0.46,
+  #      labels = "WI > 55\n(from 1994)",
+  #      adj = c(0, 1), cex = 0.75, col = "navy")
   #plot(1970:2015,seq(0.0,0.5,length=46))
 
   legend(1969, 0.57,
@@ -183,7 +183,7 @@ Fig12_revised <- function(
            "normal distribution fit",  # 2行目を独立した要素にする
            sprintf("(K\u2013S test: D = %.3f, p = %.3f)", ks_res$statistic, ks_res$p.value) # 3行目にする
          ),
-         lty    = c(3, 2, NA),   # 3行目は線が不要なので NA を追加
+         lty    = c(3, 1, NA),   # 3行目は線が不要なので NA を追加
          lwd    = c(1.5, 1.5, NA), # 3行目は NA を追加
          border = c(NA, NA, NA),
          cex    = 0.7
