@@ -13,6 +13,12 @@ Fig_year_WI_3
 
 \preformatted{
 tiff("Fig4.tiff", width = 3000, height = 2500, res = 300, compression = "lzw")
+#cairo_pdf("Fig4.pdf", width = 7.09, height = 5.5)
+ par(ps  = 9,    # 基準を9ptに
+cex = 1.0,  # 倍率は1.0のまま
+cex.axis = 0.9,   # 軸数字 → 8.1pt
+cex.lab  = 1.0,   # 軸ラベル → 9pt
+mar = c(4, 4.5, 1, 1))
 Fig_year_WI_3()
 dev.off()
 }

@@ -15,6 +15,13 @@ Fig_yr_ba_site2
 \examples{
 
 Fig_yr_ba_site2_zone ()
+\preformatted{
+tiff("Fig5.tiff", width = 2000, height = 1700, res = 300, compression = "lzw")
+cairo_pdf("Fig5.pdf", width = 6, height = 5.5)
+TateyamaForest::Fig_yr_ba_site2_zone()
+dev.off()
+# FIGURE 5 | Changes in the total basal area in each plot over time.
+}
 
 
 }

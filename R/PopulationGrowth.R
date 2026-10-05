@@ -341,7 +341,8 @@ YearsIntervalCalc<-function(yr,v,yr.interval,method=c("mean","min","max")){
 #'  plot.name=c( "Kaminokodaira","Matsuotoge","Kagamiishi")
 #'  for(ii in 1:3){
 #'  plot.<-plot.name[ii]
-#'  dt.<- -0.55/100*(plt5$alt[plt5$na== plot.]-1368)
+#'  #dt.<- -0.55/100*(plt5$alt[plt5$na== plot.]-1368)
+#'  dt.<- -0.55/100*(plt5$alt[plt5$na== plot.]-1459)
 #'  df.temp$Tmin[df.temp$plot==plot.] <-df.temp$Tmin[df.temp$plot==plot.]+dt.
 #'   df.temp$Tmax[df.temp$plot==plot.] <-df.temp$Tmax[df.temp$plot==plot.]+dt.
 #'    df.temp$Tmaen[df.temp$plot==plot.] <-df.temp$Tmean[df.temp$plot==plot.]+dt.
@@ -439,7 +440,7 @@ YearsIntervalCalc_plots <- function(plot.name=c( "Kaminokodaira","Matsuotoge","K
 # cor(kurobe_toyama$max,kurobe_toyama$toya_Tmax)
 #
 #
-# z<-WI_with_KurodeDamObservation
+# z<-WI_with_KurobeDamObservation
 # tm<-toya[27:85,"Tmean"]
 # plot(tm,z[,1])
 # cor.test(tm,z[,1])

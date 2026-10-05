@@ -13,6 +13,7 @@ Fig_kurobe_dam_temperature
 
 \preformatted{
 tiff("Fig3.tiff", width = 2000, height = 1800, res = 300, compression = "lzw")
+cairo_pdf("Fig3.pdf", width = 6, height = 5.5)
 Fig_kurobe_dam_temperature()
 dev.off()
 }

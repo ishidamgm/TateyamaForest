@@ -80,6 +80,7 @@ F_kurobe_dum_mean_tmp <-function(year) {
 #' @section Final TIFF output (JVS submission):
 #' \preformatted{
 #' tiff("Fig3.tiff", width = 2000, height = 1800, res = 300, compression = "lzw")
+#' cairo_pdf("Fig3.pdf", width = 6, height = 5.5)
 #'Fig_kurobe_dam_temperature()
 #'dev.off()
 #'}
@@ -705,7 +706,7 @@ Fig_year_WI_JP2<-function(){
 
 
   abline(h=c(45,55),lty=2,lwd=3,col="red")
-  wi.<-WI_with_KurodeDamObservation
+  wi.<-WI_with_KurobeDamObservation
   for (i in 1:length(plot_no)){
     lines(rownames(wi.),wi.[,plot_no[i]],type="l",lty=i, lwd=2,#pch=i,
           col=leg$col[legend_no[i]])
@@ -748,7 +749,7 @@ Fig_year_WI_2<-function(){
 
 
   abline(h=c(45,55),lty=2,lwd=3,col="red")
-  wi.<-WI_with_KurodeDamObservation
+  wi.<-WI_with_KurobeDamObservation
   for (i in 1:length(plot_no)){
     lines(rownames(wi.),wi.[,plot_no[i]],type="l",lty=i, lwd=2,#pch=i,
           col=leg$col[legend_no[i]])
@@ -790,6 +791,12 @@ Fig_year_WI_2<-function(){
 #' @section Final TIFF output (JVS submission):
 #' \preformatted{
 #' tiff("Fig4.tiff", width = 3000, height = 2500, res = 300, compression = "lzw")
+#' #cairo_pdf("Fig4.pdf", width = 7.09, height = 5.5)
+#'  par(ps  = 9,    # 基準を9ptに
+#' cex = 1.0,  # 倍率は1.0のまま
+#' cex.axis = 0.9,   # 軸数字 → 8.1pt
+#' cex.lab  = 1.0,   # 軸ラベル → 9pt
+#' mar = c(4, 4.5, 1, 1))
 #' Fig_year_WI_3()
 #'dev.off()
 #'}
@@ -811,7 +818,7 @@ Fig_year_WI_3<-function(){
 
 
   #abline(h=c(15,45,55,85),lty=2,lwd=3,col="red")
-  wi.<-wi_year #WI_with_KurodeDamObservation
+  wi.<-wi_year #WI_with_KurobeDamObservation
   x <- wi.$year
   x_range <- range(x)
   for(i in c(15,45,55,85))lines(x_range,c(i,i),lty=2,lwd=3,col="red")
@@ -859,7 +866,7 @@ Fig_year_WI_3<-function(){
   #        box.lwd   = 0.5,    # 枠線の太さ
   #        inset     = 0.005    # 枠内余白
   # )
-  legend(2030,60,#"right",
+  legend(2028,60,#"right",
          plot_name,
          cex =1.0,                    # 凡例文字を拡大（0.9→1.1）
          lty = 1:4,

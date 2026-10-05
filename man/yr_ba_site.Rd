@@ -14,6 +14,7 @@ Return a list of data frame for year and basal area  per every site
 }
 \examples{
 BA <- yr_ba_site(cond=substitute(f.>0))
+par(las=1)
  plot(0,type="n" , lty=1,pch=1,col=1,
      xlim=c(1998,2025) , ylim=c(0.97,1.23),
      xlab="Year",ylab="Basal area ratio")
@@ -24,7 +25,7 @@ for (ii in 1:length(BA)){
                      lty=leg$lty[ii],pch=leg$pch[ii],col=leg$col[ii])#'
 }
 
-legend(2000,1.2,leg$n,pch=leg$pch,col=leg$col,lty=leg$lty,cex=0.7)
+legend(1998,1.23,leg$n,pch=leg$pch,col=leg$col,lty=leg$lty,cex=0.7)
 
 
 }

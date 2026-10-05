@@ -2,18 +2,39 @@
 % Please edit documentation in R/Fig2024.R
 \name{Fig_yr_ba_Kaminoko_JVS2}
 \alias{Fig_yr_ba_Kaminoko_JVS2}
-\title{ANCOVA for slope of regression lines for WI and Basal area at the Ecotone plot}
+\title{par(ps  = 9,    # 基準を9ptに
+cex = 1.0, # 倍率は1.0のまま
+cex.axis = 1,   # 軸数字 → 8.1pt
+cex.lab  = 1,   # 軸ラベル → 9pt
+mar = c(4, 4, 3, 3),
+lheight=0.5)
+ANCOVA for slope of regression lines for WI and Basal area at the Ecotone plot}
 \usage{
 Fig_yr_ba_Kaminoko_JVS2()
 }
 \description{
+par(ps  = 9,    # 基準を9ptに
+cex = 1.0, # 倍率は1.0のまま
+cex.axis = 1,   # 軸数字 → 8.1pt
+cex.lab  = 1,   # 軸ラベル → 9pt
+mar = c(4, 4, 3, 3),
+lheight=0.5)
 ANCOVA for slope of regression lines for WI and Basal area at the Ecotone plot
 }
 \examples{
+dev.off()
 Fig_yr_ba_Kaminoko_JVS2()
 
 \preformatted{
 tiff("Fig6.tiff", width = 3000, height = 1800, res = 300, compression = "lzw")
+cairo_pdf("Fig6.pdf", width = 7, height = 3.8)
+par(ps      = 7,
+    cex     = 0.8,
+    cex.axis= 1,
+    cex.lab = 1,
+    mar     = c(4, 5, 2, 1),
+    lheight = 0.8)   # ← 行間の倍率（デフォルト=1）
+#'
 TateyamaForest::Fig_yr_ba_Kaminoko_JVS2()
 dev.off()
 #  FIGURE 6 | Changes in basal area in the Ecotone plot over time.
